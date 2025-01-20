@@ -13,8 +13,6 @@ export const getLeaderboard = () => async (dispatch) => {
       dispatch,
       "POST", // HTTP method for POST request
       `${route}?`, // Endpoint to fetch leaderboard data
-      null, // No POST data (null in this case)
-      null // No query parameters in this case
     );
 
     console.log("get-leaderboard-details-res-data", response);

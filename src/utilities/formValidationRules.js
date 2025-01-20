@@ -166,10 +166,7 @@ export const opportunityFormRules = {
                 required: true,
                 message: "This field is required",
             },
-            {
-                pattern: /^[0-9]\d*$/,
-                message: "Value must be a positive number or 0",
-            },
+      
         ],
     }
 };

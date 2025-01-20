@@ -5,6 +5,8 @@ import { colorConfig } from "@/config";
 import ChartComponent from "./component/bar-chart";
 import { YearPicker } from "../components";
 import { useDispatch } from "react-redux";
+import { useFetchSummaryView } from "@/hooks/dashboards";
+import { FullScreenLoading } from "@/components";
 
 // const data = {
 //   territorySummaryView: [
@@ -168,60 +170,60 @@ import { useDispatch } from "react-redux";
 //   ],
 // };
 
-const generateData = (numEntities) => {
-  const labels = [
-    "Chennai SCRU-I",
-    "Tamil Nadu - Others",
-    "Bangalore SCRU",
-    "BFSI: Banking, Financial Services and Insurance",
-    "EUR: Energy, Utility and Resources",
-    "TMET: Telecom, Media, Entertainment and Technology",
-    "Strategy",
-    "Digital",
-    "Data",
-  ];
+// const generateData = (numEntities) => {
+//   const labels = [
+//     "Chennai SCRU-I",
+//     "Tamil Nadu - Others",
+//     "Bangalore SCRU",
+//     "BFSI: Banking, Financial Services and Insurance",
+//     "EUR: Energy, Utility and Resources",
+//     "TMET: Telecom, Media, Entertainment and Technology",
+//     "Strategy",
+//     "Digital",
+//     "Data",
+//   ];
 
-  const getRandomTarget = () => Math.floor(Math.random() * 50000) + 1000; // Random target between 1000 and 50000
-  const getRandomActual = (target) =>
-    Math.floor(Math.random() * (target + 1000)); // Random actual, less than target
+//   const getRandomTarget = () => Math.floor(Math.random() * 50000) + 1000; // Random target between 1000 and 50000
+//   const getRandomActual = (target) =>
+//     Math.floor(Math.random() * (target + 1000)); // Random actual, less than target
 
-  const generateEntity = (label) => {
-    const targets = {};
-    const actual = {};
+//   const generateEntity = (label) => {
+//     const targets = {};
+//     const actual = {};
 
-    ["q1", "q2", "q3", "q4"].forEach((quarter) => {
-      targets[quarter] = getRandomTarget();
-      actual[quarter] = getRandomActual(targets[quarter]);
-    });
+//     ["q1", "q2", "q3", "q4"].forEach((quarter) => {
+//       targets[quarter] = getRandomTarget();
+//       actual[quarter] = getRandomActual(targets[quarter]);
+//     });
 
-    return {
-      entityId: `${Math.random().toString(36).substring(7)}`,
-      label,
-      year: "2025",
-      targets,
-      actual,
-    };
-  };
+//     return {
+//       entityId: `${Math.random().toString(36).substring(7)}`,
+//       label,
+//       year: "2025",
+//       targets,
+//       actual,
+//     };
+//   };
 
-  const territorySummaryView = [];
-  const industrySummaryView = [];
-  const solutionSummaryView = [];
+//   const territorySummaryView = [];
+//   const industrySummaryView = [];
+//   const solutionSummaryView = [];
 
-  // Create large number of entities
-  for (let i = 0; i < numEntities / 3; i++) {
-    territorySummaryView.push(generateEntity(labels[i % labels.length]));
-    industrySummaryView.push(generateEntity(labels[(i + 3) % labels.length]));
-    solutionSummaryView.push(generateEntity(labels[(i + 6) % labels.length]));
-  }
+//   // Create large number of entities
+//   for (let i = 0; i < numEntities / 3; i++) {
+//     territorySummaryView.push(generateEntity(labels[i % labels.length]));
+//     industrySummaryView.push(generateEntity(labels[(i + 3) % labels.length]));
+//     solutionSummaryView.push(generateEntity(labels[(i + 6) % labels.length]));
+//   }
 
-  return {
-    territorySummaryView,
-    industrySummaryView,
-    solutionSummaryView,
-  };
-};
+//   return {
+//     territorySummaryView,
+//     industrySummaryView,
+//     solutionSummaryView,
+//   };
+// };
 
-const data = generateData(300); // Generates 300 entities (100 each for the three categories)
+// const data = generateData(300); // Generates 300 entities (100 each for the three categories)
 
 // console.log(largeData);
 
@@ -230,10 +232,11 @@ const { Option } = Select;
 const Dashboard = () => {
   const [year, setYear] = useState("2025");
   const [quarter, setQuarter] = useState("q1");
-
   const handleYearChange = (value) => setYear(value);
   const handleQuarterChange = (value) => setQuarter(value);
-
+  const { loading, summaryViewData, setRefresh } = useFetchSummaryView({year});
+  console.log("summary Data in component ---", summaryViewData);
+  
   // Filter data based on selected year and quarter
   const chartData = (dataView) => {
     const filteredData = dataView.map((item) => ({
@@ -271,6 +274,7 @@ const Dashboard = () => {
     };
   };
 
+  if(loading || !summaryViewData) return <FullScreenLoading/>
   return (
     <div style={{}}>
       {/* Filters at the top corner */}
@@ -303,7 +307,7 @@ const Dashboard = () => {
               </span>
             }
           >
-            <ChartComponent chartData={chartData(data.industrySummaryView)} />
+            <ChartComponent chartData={chartData(summaryViewData?.industrySummaryView)} />
           </Card>
         </Col>
 
@@ -315,7 +319,7 @@ const Dashboard = () => {
               </span>
             }
           >
-            <ChartComponent chartData={chartData(data.territorySummaryView)} />
+            <ChartComponent chartData={chartData(summaryViewData?.territorySummaryView)} />
           </Card>
         </Col>
       </Row>
@@ -324,7 +328,7 @@ const Dashboard = () => {
       <Row gutter={16} style={{ marginBottom: "20px" }}>
         <Col span={24}>
           <Card title="Solution Overview">
-            <ChartComponent chartData={chartData(data.solutionSummaryView)} />
+            <ChartComponent chartData={chartData(summaryViewData?.solutionSummaryView)} />
           </Card>
         </Col>
       </Row>

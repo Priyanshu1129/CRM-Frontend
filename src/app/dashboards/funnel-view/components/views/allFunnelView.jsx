@@ -5,6 +5,9 @@ import { Row, Col } from "antd";
 import { Doughnut } from "..";
 import { ConversionRates } from "..";
 import { useFetchFunnelView } from "@/hooks/dashboards";
+import HorizontalFunnelChart from "../newFunnelChart";
+
+
 
 export const AllFunnelView = ({
   allViewParticularDate,
@@ -33,7 +36,8 @@ export const AllFunnelView = ({
     <div style={{ width: "100%", marginTop: "20px" }}>
       <Row gutter={[18, 18]}>
         <Col xs={24} lg={18}>
-          <FunnelChart funnelStats={funnelViewData?.funnelStats} />
+        <HorizontalFunnelChart funnelStats={funnelViewData?.funnelStats} />
+          {/* <FunnelChart funnelStats={funnelViewData?.funnelStats} /> */}
         </Col>
         <Col xs={24} lg={6}>
           {funnelViewData?.funnelStats && (

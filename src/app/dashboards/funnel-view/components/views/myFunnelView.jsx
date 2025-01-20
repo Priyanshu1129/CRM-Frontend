@@ -5,6 +5,10 @@ import { FunnelChart } from "..";
 import { Doughnut } from "..";
 import { ConversionRates } from "..";
 import { useFetchMyFunnelView } from "@/hooks/dashboards";
+import HorizontalFunnelChart from "../newFunnelChart";
+
+
+
 
 export const MyFunnelView = ({
   myViewParticularDate,
@@ -33,6 +37,7 @@ export const MyFunnelView = ({
       <Row gutter={[18, 18]}>
         <Col xs={24} lg={18}>
           <FunnelChart funnelStats={funnelViewData?.funnelStats} />
+          {/* <HorizontalFunnelChart data={data} /> */}
         </Col>
         <Col xs={24} lg={6}>
           {funnelViewData?.funnelStats && (

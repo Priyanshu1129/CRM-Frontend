@@ -2,15 +2,17 @@
 import { useFetchLeaderboard } from "@/hooks/dashboards";
 import { LeaderboardHeader, TableView, ChartView } from "./components";
 import React, { useState } from "react";
-import { data } from "./config";
+import { FullScreenLoading } from "@/components";
+// import { data } from "./config";
 
 const Leaderboard = () => {
   const [view, setView] = useState("chartView");
   const [type, setType] = useState("left");
   const [selectedQuarter, setSelectedQuarter] = useState("currentQuarter");
   const [sortParameter, setSortParameter] = useState("clientEntries"); // Default sort parameter
-  // const { loading, leaderboardData, setRefresh } = useFetchLeaderboard();
+  const { loading, leaderboardData, setRefresh } = useFetchLeaderboard();
 
+  if(!leaderboardData) return <FullScreenLoading/>
   return (
     <div
       style={{
@@ -37,14 +39,14 @@ const Leaderboard = () => {
       >
         {view == "chartView" && (
           <ChartView
-            data={data}
+            data={leaderboardData}
             selectedQuarter={selectedQuarter}
             sortParameter={sortParameter}
             type={type}
             setType={setType}
           />
         )}
-        {view == "tableView" && <TableView data={data} />}
+        {view == "tableView" && <TableView data={leaderboardData} />}
       </div>
     </div>
   );
