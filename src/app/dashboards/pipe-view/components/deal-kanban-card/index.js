@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { CustomAvatar, Text } from "@/components";
 import { ShowCurrency } from "@/app/dashboards/components";
+import { useRouter } from "next/navigation";
 
 // Extend dayjs with relativeTime plugin
 dayjs.extend(relativeTime);
@@ -22,6 +23,7 @@ const DealKanbanCard = ({
   variant = "default",
 }) => {
   const { replace } = useNavigation();
+  const router = useRouter();
 
   const dropdownItems = useMemo(() => {
     const dropdownItems = [
@@ -31,7 +33,8 @@ const DealKanbanCard = ({
         // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
         icon: <EyeOutlined />,
         onClick: () => {
-          replace(`/scrumboard/sales/edit/${id}`);
+          // replace(`/scrumboard/sales/edit/${id}`);
+          router.push(`/deal/deal-details/${id}`);
         },
       },
       {
@@ -40,7 +43,7 @@ const DealKanbanCard = ({
         key: "2",
         // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
         icon: <DeleteOutlined />,
-        onClick: () => { },
+        onClick: () => { router.push(`/deal/delete-deal/${id}`) },
       },
     ];
 
@@ -99,7 +102,7 @@ const DealKanbanCard = ({
         size="small"
         bordered
         onClick={() => {
-          replace(`/scrumboard/sales/edit/${id}`);
+          router.push(`/deal/deal-details/${id}`);
         }}
         actions={[
           <div

@@ -39,14 +39,16 @@ const salesSubStageSlice = createSlice({
   reducers: {
     // reducer to filter the salesSubStages acc to selected sales stage
     filterSalesSubStages: (state, action) => {
-      const salesStageId = action.payload;
-      console.log("filtered executed-----", salesStageId);
-      const allSubStages = JSON.parse(
-        JSON.stringify(state?.getAllSalesSubStages?.data?.data)
-      );
-      state.getFilteredSalesSubStages.data = allSubStages.filter(
-        (subStage) => subStage?.salesStage?._id?.toString() == salesStageId
-      );
+      if (state?.getAllSalesSubStages?.data?.data) {
+        const salesStageId = action.payload;
+        console.log("filtered executed-----", salesStageId);
+        const allSubStages = JSON.parse(
+          JSON.stringify(state?.getAllSalesSubStages?.data?.data)
+        );
+        state.getFilteredSalesSubStages.data = allSubStages.filter(
+          (subStage) => subStage?.salesStage?._id?.toString() == salesStageId
+        );
+      }
     },
 
     getSalesSubStageRequest: (state, action) => {

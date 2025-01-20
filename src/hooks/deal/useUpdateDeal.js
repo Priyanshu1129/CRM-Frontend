@@ -57,9 +57,12 @@ export const useUpdateOpportunity = ({ opportunity, form }) => {
       };
       form.setFieldsValue(opportunityInitialValues);
       // align the sales sub stage with sales stage
+      
+      console.log("sales sub stage id before calling filter ", opportunityInitialValues.salesStage)
+      console.log("opportunityValues ", opportunityInitialValues)
       dispatch(
         salesSubStageActions.filterSalesSubStages(
-          opportunityInitialValues.salesStage?._id?.toString()
+          opportunityInitialValues.salesStage
         )
       );
       initialValues.current = opportunityInitialValues;

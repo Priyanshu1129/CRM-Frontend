@@ -208,6 +208,6 @@ html, body {
 
 /* Customizing vertical padding of table cells */
 .ant-table-cell {
-  padding-top: 8px !important; /* Reduce top padding */
-  padding-bottom: 8px !important; /* Reduce bottom padding */
+  padding-top: 12px !important; /* Reduce top padding */
+  padding-bottom: 12px !important; /* Reduce bottom padding */
 }
