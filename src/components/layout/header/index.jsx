@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout, Space } from "antd";
 import {
-  Notifications,
   CurrentUser,
   CurrencyChangeDropDown,
   BreadcrumbBar,
@@ -47,7 +46,6 @@ const Header = () => {
         <Space align="center" size="small">
           <CurrencyChangeDropDown />
           <FullscreenButton />
-          <Notifications />
           <CurrentUser />
         </Space>
       </AntHeader>
