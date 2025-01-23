@@ -7,8 +7,8 @@ import { userActions } from "@/redux/slices/userSlice";
 
 const { Text } = Typography;
 
-const DeleteUserModel = ({  onCancel }) => {
-  const {open, configData, configType} = useSelector((state)=> state.configuration.deleteConfigPopup);
+const DeleteUserModel = () => {
+  const {open, user} = useSelector((state)=> state.user.deleteUserPopup);
   const {loading , handleDeleteUser} = useDeleteUser();
   const dispatch = useDispatch();
   
