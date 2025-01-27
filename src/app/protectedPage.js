@@ -59,8 +59,8 @@ export const ProtectedPage = ({ children }) => {
 
   if (data) {
     // User is authenticated
-    if (isPublicRoute) {
-      router.replace("/"); // Redirect to home if authenticated and accessing a public route
+    if (isPublicRoute || currentPath == "/") {
+      router.replace("/opportunity/lead/add-lead"); // Redirect to home if authenticated and accessing a public route
       return <NoLayout>Redirecting...</NoLayout>;
     }
 

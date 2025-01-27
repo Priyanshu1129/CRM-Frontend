@@ -17,7 +17,7 @@ export const useLogin = () => {
       setLoading(true);
     } else if (status === "success") {
       setLoading(false);
-      router.push("/");
+      router.push("/opportunity/lead/add-lead");
       dispatch(authActions.checkAuthSuccess(data));
     } else if (status === "failed") {
       setLoading(false);
