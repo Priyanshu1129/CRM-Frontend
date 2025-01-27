@@ -19,6 +19,7 @@ export const ListHeader = ({
   setFilter,
   filters,
   setFilters,
+  addButton = true,
   type = "normal",
   backButton = false,
   backButtonText = true,
@@ -47,7 +48,7 @@ export const ListHeader = ({
         }}
       >
         {backButton && <BackButton text={backButtonText} />}
-        {canAddEntity ? (
+        {canAddEntity && addButton ? (
           type == "config" ? (
             configType != "sales-stage" && (
               <ConfigListTitleButton

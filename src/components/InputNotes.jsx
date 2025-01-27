@@ -1,5 +1,10 @@
 import React from "react";
-import { MinusCircleOutlined, MinusCircleTwoTone, PlusCircleTwoTone, PlusOutlined } from "@ant-design/icons";
+import {
+  MinusCircleOutlined,
+  MinusCircleTwoTone,
+  PlusCircleTwoTone,
+  PlusOutlined,
+} from "@ant-design/icons";
 import { Button, Form, Input, Col } from "antd";
 const formItemLayout = {
   labelCol: {
@@ -20,14 +25,14 @@ const formItemLayout = {
   },
 };
 
-export const InputNotes = () => {
+export const InputNotes = ({ buttonText = "Add Notes" }) => {
   return (
     <Form.List name="notes">
       {(fields, { add, remove }, { errors }) => (
         <>
           {fields.map((field, index) => (
-            <Col span={8} key={field.key}>
-              <Form.Item {...formItemLayout} required={false}>
+            <Col span={24} key={field.key}>
+              <Form.Item required={false}>
                 <Form.Item
                   {...field}
                   validateTrigger={["onChange", "onBlur"]}
@@ -39,7 +44,7 @@ export const InputNotes = () => {
                   ]}
                   noStyle
                 >
-                  <Input.TextArea placeholder="Notes.." />
+                  <Input.TextArea rows={3} />
                 </Form.Item>
                 {fields.length >= 1 ? (
                   <MinusCircleTwoTone
@@ -59,7 +64,7 @@ export const InputNotes = () => {
               }}
               icon={<PlusCircleTwoTone />}
             >
-              Add Notes
+              {buttonText}
             </Button>
             {/* <Button
               type="dashed"

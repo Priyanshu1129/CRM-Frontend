@@ -1,5 +1,9 @@
 import React from "react";
-import { ArrowLeftOutlined, UploadOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  EyeOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
 import { Button, Grid } from "antd";
 import { useRouter } from "next/navigation";
 import { Text } from "./text";
@@ -7,17 +11,21 @@ import { Text } from "./text";
 export const FormHeader = ({
   fileUpload = false,
   backButtonText = "",
+  backButton = true,
+  listButtonText = "Show All",
+  listButtonUrl = null,
+  listButton = false,
   setUploadModal,
 }) => {
   const screens = Grid.useBreakpoint();
   const router = useRouter();
+
   const BackButton = () => (
     <Button
       icon={<ArrowLeftOutlined />}
       onClick={() => {
         router.back();
       }}
-
       style={{
         marginTop: screens.xs ? "1.6rem" : "0rem",
       }}
@@ -31,6 +39,21 @@ export const FormHeader = ({
       >
         {!screens.xs ? backButtonText : null}
       </Text>
+    </Button>
+  );
+
+  const ListButton = () => (
+    <Button
+      icon={<EyeOutlined />}
+      type="primary"
+      onClick={() => {
+        if (listButtonUrl) router.push(listButtonUrl);
+      }}
+      style={{
+        marginTop: screens.xs ? "1.6rem" : "0rem",
+      }}
+    >
+      {!screens.xs ? listButtonText : null}
     </Button>
   );
 
@@ -56,7 +79,8 @@ export const FormHeader = ({
         justifyContent: "space-between",
       }}
     >
-      <BackButton />
+      {backButton && <BackButton />}
+      {listButton && <ListButton />}
       {fileUpload && <UploadButton />}
     </div>
   );

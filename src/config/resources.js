@@ -18,7 +18,6 @@ import {
   InteractionOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
-import { VscMention } from "react-icons/vsc";
 
 import { MdOutlineCircle } from "react-icons/md";
 
@@ -66,16 +65,14 @@ export const resources = [
     icon: <UnorderedListOutlined />,
     children: [
       {
-        key: "opportunity/lead",
+        key: "opportunity/lead/add-lead",
         label: "Leads",
         icon: <FileAddOutlined />,
-        disabled: true,
       },
       {
-        key: "opportunity/interaction",
+        key: "opportunity/interaction/add-interaction",
         label: "Interactions",
         icon: <InteractionOutlined />,
-        disabled: true,
       },
       {
         key: "opportunity/mention",

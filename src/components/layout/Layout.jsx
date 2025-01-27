@@ -57,7 +57,6 @@ const LayoutComponent = ({ children }) => {
                 // minHeight: 280,
                 height: 280,
                 borderRadius: borderRadiusLG,
-                // background: colorBgContainer,
                 overflowY: "auto",
                 scrollbarWidth: "none",
                 scrollbarColor: "unset",
