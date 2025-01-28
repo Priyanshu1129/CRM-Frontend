@@ -44,8 +44,6 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
       breakpoint="lg"
       width={264}
       style={{
-        border: "1px solid",
-        borderColor: colorConfig.cardBorder,
         fontWeight: "500",
         height: "100vh",
         position: "fixed",

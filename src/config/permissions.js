@@ -56,10 +56,15 @@ export const routePermissions = {
   ],
   [urls.MENTION_UPDATE]: [{ entity: "MENTION", action: ["UPDATE"] }], // fake route
 
-  [urls.USER]: [{ entity: "ROLE ENTITY", action: ["GET ALL", "CREATE"] }],
-  [urls.USER_ADD]: [{ entity: "ROLE ENTITY", action: ["CREATE"] }],
-  [urls.USER_DETAILS]: [{ entity: "ROLE ENTITY", action: ["READ"] }],
-  [urls.USER_UPDATE]: [{ entity: "ROLE ENTITY", action: ["UPDATE"] }], // fake route
+  // [urls.USER]: [{ entity: "ROLE ENTITY", action: ["GET ALL", "CREATE"] }],
+  // [urls.USER_ADD]: [{ entity: "ROLE ENTITY", action: ["CREATE"] }],
+  // [urls.USER_DETAILS]: [{ entity: "ROLE ENTITY", action: ["READ"] }],
+  // [urls.USER_UPDATE]: [{ entity: "ROLE ENTITY", action: ["UPDATE"] }],
+
+  [urls.USER]: [{ entity: "TEAM", action: ["GET ALL", "CREATE"] }],
+  [urls.USER_ADD]: [{ entity: "TEAM", action: ["CREATE"] }],
+  [urls.USER_DETAILS]: [{ entity: "TEAM", action: ["READ"] }],
+  [urls.USER_UPDATE]: [{ entity: "TEAM", action: ["UPDATE"] }],
 
   // admin routes
   [urls.ADMIN]: [
@@ -147,7 +152,8 @@ export const sideBarPermissions = {
   contact: [{ entity: "CONTACT", action: ["GET ALL", "CREATE"] }],
 
   // for user tab
-  user: [{ entity: "ROLE ENTITY", action: ["GET ALL", "CREATE"] }],
+  // user: [{ entity: "ROLE ENTITY", action: ["GET ALL", "CREATE"] }],
+  user: [{ entity: "TEAM", action: ["GET ALL", "CREATE"] }],
 
   // for admin tab
   admin: [
