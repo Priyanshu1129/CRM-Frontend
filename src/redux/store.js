@@ -37,6 +37,7 @@ import {
   registrationReducer,
   registrationStatusReducer,
 } from "./slices/registrationSlice";
+import { leadReducer } from "./slices/leadSlice";
 import { roleReducer } from "./slices/roleAndPermissionSlice";
 import { authReducer } from "./slices/authSlice";
 import { forgotPasswordReducer } from "./slices/forgotPasswordSlice/forgotPasswordSlice";
@@ -83,7 +84,7 @@ const store = configureStore({
     currency: currencyReducer,
     systemConfig: systemConfigReducer,
     target: targetReducer,
-    
+    lead: leadReducer,
   },
 });
 

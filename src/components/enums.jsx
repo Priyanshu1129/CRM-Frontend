@@ -17,7 +17,6 @@ import { getAllContacts } from "@/redux/actions/contactAction";
 import { getAllTenders } from "@/redux/actions/tenderAction";
 import { getAllOpportunities } from "@/redux/actions/opportunityAction";
 import { salesSubStageActions } from "@/redux/slices/configurationSlice";
-import { CodeSandboxCircleFilled } from "@ant-design/icons";
 
 export const IndustrySelector = ({
   name = "industry",
@@ -267,8 +266,8 @@ export const SalesStageSelector = ({ name, label, rules, form }) => {
 
   // this helps to algn the sales sub stage with the selected sales stage
   const handleSelectChange = (id) => {
-     // here i want to set the form.salesSubStage value to null here 
-     form.setFieldsValue({ salesSubStage: null });
+    // here i want to set the form.salesSubStage value to null here
+    form.setFieldsValue({ salesSubStage: null });
     dispatch(salesSubStageActions.filterSalesSubStages(id));
   };
 
@@ -472,9 +471,12 @@ export const ClientSelector = ({
   name = "",
   label = "",
   rules = [],
+  leadClients = [],
+  leadPage = false,
   size = "medium",
   setInput = null,
   disabled = false,
+  // onChange,
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -482,7 +484,9 @@ export const ClientSelector = ({
     (state) => state.mastersConfig.getConfigClients
   );
 
-  const [clients, setClients] = useState(data?.clients);
+  const [clients, setClients] = useState(
+    leadPage ? leadClients : data?.clients
+  );
   const fetchAllClients = useCallback(() => {
     if (!clients) {
       dispatch(getAllClients({ config: true }));
@@ -490,14 +494,15 @@ export const ClientSelector = ({
   }, [dispatch, clients]);
 
   useEffect(() => {
-    fetchAllClients();
-  }, [fetchAllClients]);
+    if (!leadPage) fetchAllClients();
+    else setClients(leadClients);
+  }, [fetchAllClients, leadClients]);
 
   useEffect(() => {
     if (status == "pending") {
       setLoading(true);
     } else if (status == "success") {
-      setClients(data?.clients);
+      if (!leadPage) setClients(data?.clients);
       setLoading(false);
     } else {
       setLoading(false);
@@ -544,13 +549,17 @@ export const ContactSelector = ({
   rules = [],
   size = "medium",
   mode = "default",
+  leadPage = false,
+  leadContacts = [],
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { status, data, error } = useSelector(
     (state) => state.mastersConfig.getConfigContacts
   );
-  const [contacts, setContacts] = useState(data?.contacts);
+  const [contacts, setContacts] = useState(
+    leadPage ? leadContacts : data?.contacts
+  );
 
   const fetchAllContacts = useCallback(() => {
     if (!contacts) {
@@ -559,14 +568,15 @@ export const ContactSelector = ({
   }, [dispatch, contacts]);
 
   useEffect(() => {
-    fetchAllContacts();
-  }, [fetchAllContacts]);
+    if (!leadPage) fetchAllContacts();
+    else setContacts(leadContacts);
+  }, [leadContacts, fetchAllContacts]);
 
   useEffect(() => {
     if (status == "pending") {
       setLoading(true);
     } else if (status == "success") {
-      setContacts(data?.contacts);
+      if (!leadPage) setContacts(data?.contacts);
       setLoading(false);
     } else {
       setLoading(false);
