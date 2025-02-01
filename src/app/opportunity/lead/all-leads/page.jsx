@@ -5,7 +5,7 @@ import { LeadsTableView } from "../components";
 import { Filter } from "../components/filter";
 import { useFetchLeads } from "@/hooks/lead";
 
-const OpportunityMaster = () => {
+const AllLeads = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [filters, setFilters] = useState({});
@@ -56,4 +56,4 @@ const OpportunityMaster = () => {
   );
 };
 
-export default OpportunityMaster;
+export default AllLeads;

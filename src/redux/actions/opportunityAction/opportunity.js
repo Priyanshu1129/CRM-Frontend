@@ -92,7 +92,7 @@ export const createOpportunity = (opportunityData) => async (dispatch) => {
     );
 
     console.log("create-opportunity-res-data", response);
-    console.log("create-opportunity-res-data-1", response.data.data);
+
     dispatch(opportunityActions.createOpportunitySuccess(response.data.data));
     dispatch(
       opportunityActions.updateOpportunityList({

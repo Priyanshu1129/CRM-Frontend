@@ -56,5 +56,4 @@ https://demos.pixinvent.com/vuexy-nextjs-admin-template/demo-4/en/dashboards/eco
 
 
 contact not sync
-should we remove contact field from lead
 interaction is not updating with opportunity id when opportunity is created

@@ -32,7 +32,7 @@ import { Text } from "@/components";
 import { CreateDeal } from "./create-lead";
 import { colorConfig } from "@/config";
 
-const AddDeal = () => {
+const AddLead = () => {
   const screens = Grid.useBreakpoint();
 
   const {
@@ -119,4 +119,4 @@ const AddDeal = () => {
   );
 };
 
-export default AddDeal;
+export default AddLead;

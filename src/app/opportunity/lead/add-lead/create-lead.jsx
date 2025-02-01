@@ -6,10 +6,10 @@ import {
   ContactSelector,
   CurrencyAmountInput,
 } from "@/components";
-import { opportunityFormRules } from "@/utilities/formValidationRules";
+import { leadFormRules } from "@/utilities/formValidationRules";
 import { Text } from "@/components";
 import { colorConfig } from "@/config";
-import { useFetchLeadContacts } from "@/hooks/lead/useFetchLeadContacts";
+import { useFetchLeadContacts, useAddLead } from "@/hooks/lead";
 
 export const CreateDeal = ({ clientLoading, clients }) => {
   const [client, setClient] = useState(null);
@@ -24,8 +24,10 @@ export const CreateDeal = ({ clientLoading, clients }) => {
     form.setFieldsValue({ contact: null }); // Reset the contact field to null when client changes
   };
 
+  const { onFinish, loading: createLeadLoading } = useAddLead();
+
   return (
-    <Form layout="vertical" initialValues={{}} form={form} onFinish={() => {}}>
+    <Form layout="vertical" initialValues={{}} form={form} onFinish={onFinish}>
       <Space>
         <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
           Client Details
@@ -40,7 +42,7 @@ export const CreateDeal = ({ clientLoading, clients }) => {
             leadPage={true}
             label="Client Name"
             setInput={handleClientChange}
-            // rules={opportunityFormRules.clientName}
+            rules={leadFormRules.client}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
@@ -49,14 +51,14 @@ export const CreateDeal = ({ clientLoading, clients }) => {
             label="Contact"
             leadContacts={contacts}
             leadPage={true}
-            // rules={opportunityFormRules.clientName}
+            rules={leadFormRules.contact}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <Form.Item
             name="projectName"
             label="Project Name"
-            // rules={opportunityFormRules.projectName}
+            rules={leadFormRules.projectName}
           >
             <Input />
           </Form.Item>
@@ -73,29 +75,19 @@ export const CreateDeal = ({ clientLoading, clients }) => {
       <Row gutter={24}>
         <Col xs={24} sm={24} md={24} lg={24}>
           <Form.Item
-            name="about"
+            name="description"
             label="Brief about the opportunity"
-            // rules={opportunityFormRules.stageClarification}
+            rules={leadFormRules.about}
           >
             <Input.TextArea rows={4} />
           </Form.Item>
         </Col>
-        {/* </Row> */}
-
-        {/* Section: Expected Date */}
-        {/* <Space>
-            <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
-              Opportunity Source
-            </Text>
-          </Space>
-          <Divider style={{ margin: "10px" }} /> */}
 
         {/* <Row gutter={24}> */}
         <Col xs={24} sm={24} md={24} lg={24}>
           <Form.Item
             name="source"
             label="How did we receive this opportunity ?"
-            // rules={opportunityFormRules.stageClarification}
           >
             <Input />
           </Form.Item>
@@ -114,14 +106,14 @@ export const CreateDeal = ({ clientLoading, clients }) => {
           <CurrencyAmountInput
             name="salesTopLine"
             label="Sales Top-Line"
-            rules={opportunityFormRules.salesTopLine}
+            rules={leadFormRules.salesTopLine}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
-            name="offsets"
-            label="Offsets"
-            rules={opportunityFormRules.offsets}
+            name="salesOffset"
+            label="Sales Offset"
+            rules={leadFormRules.salesOffsets}
           />
         </Col>
       </Row>
@@ -131,14 +123,18 @@ export const CreateDeal = ({ clientLoading, clients }) => {
         <Col span={24}>
           <Form.Item>
             <Space>
-              <Button loading={false} type="primary" htmlType="submit">
+              <Button
+                loading={createLeadLoading}
+                type="primary"
+                htmlType="submit"
+              >
                 Submit
               </Button>
               <Button
                 type="default"
                 htmlType="button"
                 onClick={() => form.resetFields()}
-                disabled={false}
+                disabled={createLeadLoading}
               >
                 Reset
               </Button>

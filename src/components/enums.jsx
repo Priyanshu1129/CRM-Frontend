@@ -61,6 +61,7 @@ export const IndustrySelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         mode={multiple ? "multiple" : undefined}
         showSearch
         loading={loading}
@@ -111,6 +112,7 @@ export const SubIndustrySelector = ({ name, label, rules }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         loading={loading}
         optionFilterProp="children"
@@ -161,6 +163,7 @@ export const SolutionSelector = ({ name, label, rules, multiple = false }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         mode={multiple ? "multiple" : undefined}
         loading={loading}
@@ -212,6 +215,7 @@ export const SubSolutionSelector = ({ name, label, rules }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         loading={loading}
         optionFilterProp="children"
@@ -274,6 +278,7 @@ export const SalesStageSelector = ({ name, label, rules, form }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         loading={loading}
         optionFilterProp="children"
@@ -335,6 +340,7 @@ export const SalesSubStageSelector = ({ name, label, rules }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         loading={loading}
         optionFilterProp="children"
@@ -386,6 +392,7 @@ export const TerritorySelector = ({ name, label, rules, multiple = false }) => {
   return (
     <Form.Item name={name} label={label} rules={rules}>
       <Select
+        allowClear
         showSearch
         mode={multiple ? "multiple" : undefined}
         loading={loading}
@@ -446,6 +453,7 @@ export const UserSelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         size={size}
         placeholder={name ? `Search user` : ""}
         loading={loading}
@@ -522,6 +530,7 @@ export const ClientSelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         size={size}
         placeholder={name ? `Search client` : ""}
         showSearch
@@ -569,7 +578,7 @@ export const ContactSelector = ({
 
   useEffect(() => {
     if (!leadPage) fetchAllContacts();
-    else setContacts(leadContacts);
+    else if (leadContacts?.length) setContacts(leadContacts);
   }, [leadContacts, fetchAllContacts]);
 
   useEffect(() => {
@@ -591,6 +600,7 @@ export const ContactSelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         size={size}
         placeholder={name ? `Search contact` : ""}
         showSearch
@@ -656,6 +666,7 @@ export const TenderSelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         size={size}
         showSearch
         disabled={disabled}
@@ -718,6 +729,7 @@ export const OpportunitySelector = ({
       rules={rules}
     >
       <Select
+        allowClear
         size={size}
         placeholder={name ? `Search opportunity` : ""}
         showSearch

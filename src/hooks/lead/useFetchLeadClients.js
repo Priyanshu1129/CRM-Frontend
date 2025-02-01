@@ -38,6 +38,15 @@ export const useFetchLeadClients = ({ Form }) => {
     dispatch(getAllLeadClients({ territory, industry }));
   };
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      setClients([]); // Reset clients when component unmounts
+      dispatch(leadActions.clearGetAllLeadClientsData());
+      dispatch(leadActions.clearGetAllLeadContactsData());
+    };
+  }, []);
+
   return {
     loading,
     clients,
