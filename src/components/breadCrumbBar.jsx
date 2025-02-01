@@ -59,9 +59,10 @@ export const BreadcrumbBar = () => {
         if (index < pathParts.length - 1) {
           // Intermediate breadcrumb items
           return {
-            title: (
-              <Link href={accumulatedPath}>{breadcrumbLabels[index]}</Link>
-            ),
+            // title: (
+            //   <Link href={accumulatedPath}>{breadcrumbLabels[index]}</Link>
+            // ),
+            title: breadcrumbLabels[index],
             key: breadcrumbLabels[index],
           };
         }

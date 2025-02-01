@@ -17,6 +17,7 @@ import { getAllContacts } from "@/redux/actions/contactAction";
 import { getAllTenders } from "@/redux/actions/tenderAction";
 import { getAllOpportunities } from "@/redux/actions/opportunityAction";
 import { salesSubStageActions } from "@/redux/slices/configurationSlice";
+import { getAllLeads } from "@/redux/actions/leadAction";
 
 export const IndustrySelector = ({
   name = "industry",
@@ -560,6 +561,7 @@ export const ContactSelector = ({
   mode = "default",
   leadPage = false,
   leadContacts = [],
+  field = {},
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -594,10 +596,12 @@ export const ContactSelector = ({
 
   return (
     <Form.Item
+      {...field}
       style={{ width: "100%" }}
       name={name}
       label={label}
       rules={rules}
+      key={field?.key || "contact"}
     >
       <Select
         allowClear
@@ -742,6 +746,84 @@ export const OpportunitySelector = ({
         {opportunities?.map(({ customId, _id }, idx) => (
           <Select.Option key={idx} value={_id}>
             {customId ?? "Missing Value"}
+          </Select.Option>
+        ))}
+      </Select>
+    </Form.Item>
+  );
+};
+
+export const LeadSelector = ({
+  name = "",
+  label = "",
+  rules = [],
+  clientAllLeads = [],
+  interactionPage = false,
+  size = "medium",
+  setInput = null,
+  disabled = false,
+  // onChange,
+}) => {
+  const [loading, setLoading] = useState(false);
+  // const dispatch = useDispatch();
+  // const { status, data, error } = useSelector(
+  //   (state) => state.mastersConfig.getConfigLeads
+  // );
+
+  // const [leads, setLeads] = useState(
+  //   interactionPage ? clientAllLeads : data?.leads
+  // );
+  // const fetchAllLeads = useCallback(() => {
+  //   if (!leads) {
+  //     dispatch(getAllLeads({ config: true }));
+  //   }
+  // }, [dispatch, leads]);
+
+  // useEffect(() => {
+  //   if (!interactionPage) fetchAllLeads();
+  //   else if (clientAllLeads) setLeads(clientAllLeads);
+  // }, [fetchAllLeads, clientAllLeads]);
+
+  // useEffect(() => {
+  //   if (status == "pending") {
+  //     setLoading(true);
+  //   } else if (status == "success") {
+  //     if (!interactionPage) setLeads(data?.leads);
+  //     setLoading(false);
+  //   } else {
+  //     setLoading(false);
+  //   }
+  // }, [status, data]);
+
+  const handleSelect = (item) => {
+    if (setInput != null) {
+      setInput(item);
+    }
+  };
+
+  return (
+    <Form.Item
+      style={{ width: "100%" }}
+      name={name}
+      label={label}
+      rules={rules}
+    >
+      <Select
+        allowClear
+        size={size}
+        placeholder={name ? `Search Lead` : ""}
+        showSearch
+        loading={loading}
+        optionFilterProp="children"
+        filterOption={(input, option) =>
+          option?.children?.toLowerCase().includes(input.toLowerCase())
+        }
+        onSelect={handleSelect}
+        disabled={disabled}
+      >
+        {clientAllLeads?.map(({ projectName, _id }, idx) => (
+          <Select.Option key={idx} value={_id}>
+            {projectName ?? "Missing Value"}
           </Select.Option>
         ))}
       </Select>

@@ -24,7 +24,7 @@ import { MdOutlineCircle } from "react-icons/md";
 export const resources = [
   {
     key: "dashboard",
-    label: "Live Reports",
+    label: "Live Metrics",
     icon: <DashboardOutlined />,
     children: [
       {

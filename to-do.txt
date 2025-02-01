@@ -54,6 +54,12 @@ https://demos.pixinvent.com/vuexy-nextjs-admin-template/demo-4/en/dashboards/eco
 
 
 
+----------------------------->convert into deal
+----------------------------->default route of opportunities
+----------------------------->rbac
+render prev interaction
+add contact from lead and interaction
+add deal from mention
 
-contact not sync
-interaction is not updating with opportunity id when opportunity is created
+
+

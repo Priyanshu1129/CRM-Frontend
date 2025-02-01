@@ -71,33 +71,55 @@ export const getAllLeadContacts =
     }
   };
 
-export const getAllLeads = (filters) => async (dispatch) => {
-  try {
-    dispatch(leadActions.getAllLeadsRequest());
-    console.log("getAllLead-request");
+export const getAllLeads =
+  ({
+    page = null,
+    limit = null,
+    config = false,
+    industry = "",
+    subIndustry = "",
+    territory = "",
+    enteredBy = "",
+    client,
+    entryDate,
+  }) =>
+  async (dispatch) => {
+    try {
+      dispatch(leadActions.getAllLeadsRequest());
+      console.log("getAllLead-request");
 
-    // Use axiosRequest helper function
-    const response = await axiosRequest(
-      dispatch,
-      "GET",
-      `${route}/lead`,
-      null,
-      { ...filters }
-    );
+      // Use axiosRequest helper function
+      const response = await axiosRequest(
+        dispatch,
+        "GET",
+        `${route}/lead`,
+        null,
+        {
+          limit,
+          page,
+          config,
+          industry,
+          subIndustry,
+          territory,
+          enteredBy,
+          client,
+          entry_date: entryDate,
+        }
+      );
 
-    console.log("get-all-lead-res-data", response);
+      console.log("get-all-lead-res-data", response);
 
-    dispatch(leadActions.getAllLeadsSuccess(response.data));
-  } catch (error) {
-    console.log("getAllLead-error", error);
+      dispatch(leadActions.getAllLeadsSuccess(response.data));
+    } catch (error) {
+      console.log("getAllLead-error", error);
 
-    dispatch(
-      leadActions.getAllLeadsFailure(
-        error.message || "Failed to fetch leads data"
-      )
-    );
-  }
-};
+      dispatch(
+        leadActions.getAllLeadsFailure(
+          error.message || "Failed to fetch leads data"
+        )
+      );
+    }
+  };
 
 export const createLead = (leadData) => async (dispatch) => {
   try {

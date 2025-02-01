@@ -4,7 +4,8 @@ import { notification } from "antd";
 import { getAllLeadContacts } from "@/redux/actions/leadAction";
 import { leadActions } from "@/redux/slices/leadSlice";
 
-export const useFetchLeadContacts = ({ form, client }) => {
+export const useFetchLeadContacts = ({ Form, client }) => {
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [prevClient, setPrevClient] = useState(null);
 
@@ -46,5 +47,6 @@ export const useFetchLeadContacts = ({ form, client }) => {
   return {
     loading,
     contacts,
+    form,
   };
 };

@@ -19,51 +19,45 @@ export const useFetchLeads = ({
   const { status, data, error } = useSelector(
     (state) => state.lead.getAllLeads
   );
-  const [leads, setLeads] = useState(data?.leads);
 
+  // Store leads separately to avoid redundant re-renders
+  const [leads, setLeads] = useState(data?.leads || []);
+
+  /**
+   * Fetch all leads with proper checks to avoid redundant calls
+   */
   const fetchAllLeads = useCallback(() => {
     if (
-      !leads ||
-      currentPage !== Number(data?.page) ||
-      pageSize !== Number(data?.limit) ||
-      refresh ||
-      (filters && filter)
+      !data || // No data fetched yet
+      refresh || // Force refresh
+      filter // Filter changed
+      // currentPage !== Number(data?.page) ||
+      // pageSize !== Number(data?.limit)
     ) {
-      dispatch(getAllLeads({ page: currentPage, limit: pageSize, ...filters }));
-      setFilter(false);
-      setRefresh(false);
+      setLoading(true);
+      dispatch(
+        getAllLeads({ page: currentPage, limit: pageSize, ...filters })
+      ).finally(() => {
+        setLoading(false);
+        setFilter(false);
+        setRefresh(false);
+      });
     }
-  }, [
-    dispatch,
-    leads,
-    currentPage,
-    pageSize,
-    data?.page,
-    data?.limit,
-    refresh,
-    filters,
-    filter,
-  ]);
+  }, [dispatch, currentPage, pageSize, filters, refresh, filter, data]);
 
+  // Fetch leads on mount or when dependencies change
   useEffect(() => {
     fetchAllLeads();
   }, [fetchAllLeads]);
 
+  // Handle API response
   useEffect(() => {
-    if (filter) {
-      fetchAllLeads();
-    }
-  }, [filter, filters, fetchAllLeads]);
-
-  useEffect(() => {
-    if (status == "pending") {
-      setLoading(true);
-    } else if (status == "success") {
-      setLeads(data?.leads);
-      setLoading(false);
+    if (status === "success") {
+      if (JSON.stringify(leads) !== JSON.stringify(data?.leads)) {
+        setLeads(data?.leads || []);
+      }
       dispatch(leadActions.clearGetAllLeadsStatus());
-    } else if (status == "failed") {
-      setLoading(false);
+    } else if (status === "failed") {
       notification.error({
         message: "Error",
         description: error || "Failed to fetch leads.",
@@ -71,14 +65,17 @@ export const useFetchLeads = ({
       dispatch(leadActions.clearGetAllLeadsStatus());
       dispatch(leadActions.clearGetAllLeadsError());
     }
-  }, [dispatch, status, data?.leads, error]);
+  }, [status, data?.leads, error, dispatch, leads]);
 
+  /**
+   * Handle table filters and sorting
+   */
   const handleFilter = (pagination, tableFilters, sorter) => {
     let { field: currentSortField, order: currentSortOrder } = sorter || {};
     const prevSortField = prevSorterRef.current?.field;
     const prevSortOrder = prevSorterRef.current?.order;
 
-    // Compare sorter by field and order
+    // Check if sorter changed
     const hasSorterChanged =
       currentSortField !== prevSortField || currentSortOrder !== prevSortOrder;
 
@@ -88,14 +85,16 @@ export const useFetchLeads = ({
     };
 
     if (hasSorterChanged) {
-      // Dispatch the getAllClients action with the applied filters and sorting
-      currentSortOrder = currentSortOrder == "descend" ? "-1" : "1";
+      // Convert sorting order
+      currentSortOrder = currentSortOrder === "descend" ? "-1" : "1";
+
+      // Apply filters and fetch leads again
       setFilters({
         ...filters,
-        entryDate: currentSortField == "entryDate" ? currentSortOrder : "",
+        entryDate: currentSortField === "entryDate" ? currentSortOrder : "",
       });
+
       setFilter(true);
-      fetchAllLeads();
     }
   };
 
@@ -108,45 +107,3 @@ export const useFetchLeads = ({
     total: data?.totalCount,
   };
 };
-
-// import { useState } from "react";
-
-// export const useFetchLeads = () => {
-//   const [loading, setLoading] = useState(false);
-//   const [refresh, setRefresh] = useState(false);
-//   const [filter, setFilter] = useState(false);
-
-//   const data = [
-//     {
-//       serialNumber: 1,
-//       entryDate: new Date().toISOString(),
-//       enteredBy: { firstName: "John", lastName: "Doe" },
-//       client: { name: "Acme Corp" },
-//       projectName: "Project Alpha",
-//       solution: { label: "Custom Solution A" },
-//       about: "Brief description of the opportunity.",
-//       salesTopLine: 50000,
-//       offsets: 10000,
-//     },
-//     {
-//       serialNumber: 2,
-//       entryDate: new Date().toISOString(),
-//       enteredBy: { firstName: "Jane", lastName: "Smith" },
-//       client: { name: "Globex Inc." },
-//       projectName: "Project Beta",
-//       solution: { label: "Standard Solution B" },
-//       about: "Another brief description of the opportunity.",
-//       salesTopLine: 75000,
-//       offsets: 15000,
-//     },
-//   ];
-
-//   return {
-//     loading,
-//     leads: data,
-//     total: data.length,
-//     setFilter,
-//     setRefresh,
-//     handleFilter: () => {},
-//   };
-// };

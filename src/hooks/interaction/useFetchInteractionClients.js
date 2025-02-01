@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
-import { getAllLeadClients } from "@/redux/actions/leadAction";
-import { leadActions } from "@/redux/slices/leadSlice";
+import { getAllInteractionClients } from "@/redux/actions/interactionAction";
+import { interactionActions } from "@/redux/slices/interactionSlice";
 
-export const useFetchLeadClients = ({ form }) => {
+export const useFetchInteractionClients = ({ form }) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const { status, data, error } = useSelector(
-    (state) => state.lead.getAllLeadClients
+    (state) => state.interaction.getAllInteractionClients
   );
   const [clients, setClients] = useState(data);
 
@@ -20,29 +20,30 @@ export const useFetchLeadClients = ({ form }) => {
     } else if (status == "success") {
       setClients(data);
       setLoading(false);
-      dispatch(leadActions.clearGetAllLeadClientsStatus());
+      dispatch(interactionActions.clearGetAllInteractionClientsStatus());
     } else if (status == "failed") {
       setLoading(false);
       notification.error({
         message: "Error",
         description: error || "Failed to fetch clients.",
       });
-      dispatch(leadActions.clearGetAllLeadClientsStatus());
-      dispatch(leadActions.clearGetAllLeadClientsError());
+      dispatch(interactionActions.clearGetAllInteractionClientsStatus());
+      dispatch(interactionActions.clearGetAllInteractionClientsError());
     }
   }, [dispatch, status, data?.clients, error]);
 
   const onFinish = () => {
     const { territory, industry } = form.getFieldsValue();
-    dispatch(getAllLeadClients({ territory, industry }));
+    dispatch(getAllInteractionClients({ territory, industry }));
   };
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       setClients([]); // Reset clients when component unmounts
-      dispatch(leadActions.clearGetAllLeadClientsData());
-      dispatch(leadActions.clearGetAllLeadContactsData());
+      dispatch(interactionActions.clearGetAllInteractionClientsData());
+      dispatch(interactionActions.clearGetAllInteractionContactsData());
+      dispatch(interactionActions.clearGetClientAllLeadsData());
     };
   }, []);
 

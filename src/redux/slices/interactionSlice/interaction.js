@@ -1,16 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialInteractionState = {
-  // getAllInteractionClients: {
-  //   status: "idle",
-  //   error: null,
-  //   data: null,
-  // },
-  // getAllInteractionContacts: {
-  //   status: "idle",
-  //   error: null,
-  //   data: null,
-  // },
+  getAllInteractionClients: {
+    status: "idle",
+    error: null,
+    data: null,
+  },
+  getAllInteractionContacts: {
+    status: "idle",
+    error: null,
+    data: null,
+  },
+  getClientAllLeads: {
+    status: "idle",
+    error: null,
+    data: null,
+  },
   // getInteraction: {
   //   status: "idle",
   //   error: null,
@@ -55,31 +60,44 @@ const interactionSlice = createSlice({
     //   state.getAllInteractions.error = action.payload;
     // },
 
-    // //interaction clients states
-    // getAllInteractionClientsRequest: (state, action) => {
-    //   state.getAllInteractionClients.status = "pending";
-    // },
-    // getAllInteractionClientsSuccess: (state, action) => {
-    //   state.getAllInteractionClients.status = "success";
-    //   state.getAllInteractionClients.data = action.payload;
-    // },
-    // getAllInteractionClientsFailure: (state, action) => {
-    //   state.getAllInteractionClients.status = "failed";
-    //   state.getAllInteractionClients.error = action.payload;
-    // },
+    //interaction clients states
+    getAllInteractionClientsRequest: (state, action) => {
+      state.getAllInteractionClients.status = "pending";
+    },
+    getAllInteractionClientsSuccess: (state, action) => {
+      state.getAllInteractionClients.status = "success";
+      state.getAllInteractionClients.data = action.payload;
+    },
+    getAllInteractionClientsFailure: (state, action) => {
+      state.getAllInteractionClients.status = "failed";
+      state.getAllInteractionClients.error = action.payload;
+    },
 
     // interaction contacts states
-    // getAllInteractionContactsRequest: (state, action) => {
-    //   state.getAllInteractionContacts.status = "pending";
-    // },
-    // getAllInteractionContactsSuccess: (state, action) => {
-    //   state.getAllInteractionContacts.status = "success";
-    //   state.getAllInteractionContacts.data = action.payload;
-    // },
-    // getAllInteractionContactsFailure: (state, action) => {
-    //   state.getAllInteractionContacts.status = "failed";
-    //   state.getAllInteractionContacts.error = action.payload;
-    // },
+    getAllInteractionContactsRequest: (state, action) => {
+      state.getAllInteractionContacts.status = "pending";
+    },
+    getAllInteractionContactsSuccess: (state, action) => {
+      state.getAllInteractionContacts.status = "success";
+      state.getAllInteractionContacts.data = action.payload;
+    },
+    getAllInteractionContactsFailure: (state, action) => {
+      state.getAllInteractionContacts.status = "failed";
+      state.getAllInteractionContacts.error = action.payload;
+    },
+
+    //clients leads states
+    getClientAllLeadsRequest: (state, action) => {
+      state.getClientAllLeads.status = "pending";
+    },
+    getClientAllLeadsSuccess: (state, action) => {
+      state.getClientAllLeads.status = "success";
+      state.getClientAllLeads.data = action.payload;
+    },
+    getClientAllLeadsFailure: (state, action) => {
+      state.getClientAllLeads.status = "failed";
+      state.getClientAllLeads.error = action.payload;
+    },
 
     // get interaction states
     // getInteractionRequest: (state, action) => {
@@ -146,26 +164,37 @@ const interactionSlice = createSlice({
     // },
 
     // clear interaction clients states
-    // clearGetAllInteractionClientsStatus: (state) => {
-    //   state.getAllInteractionClients.status = "idle";
-    // },
-    // clearGetAllInteractionClientsData: () => {
-    //   state.getAllInteractionClients.data = null;
-    // },
-    // clearGetAllInteractionClientsError: (state) => {
-    //   state.getAllInteractionClients.error = null;
-    // },
+    clearGetAllInteractionClientsStatus: (state) => {
+      state.getAllInteractionClients.status = "idle";
+    },
+    clearGetAllInteractionClientsData: (state) => {
+      state.getAllInteractionClients.data = null;
+    },
+    clearGetAllInteractionClientsError: (state) => {
+      state.getAllInteractionClients.error = null;
+    },
 
     // // clear interaction contacts states
-    // clearGetAllInteractionContactsStatus: (state) => {
-    //   state.getAllInteractionContacts.status = "idle";
-    // },
-    // clearGetAllInteractionContactsData: () => {
-    //   state.getAllInteractionContacts.data = null;
-    // },
-    // clearGetAllInteractionContactsError: (state) => {
-    //   state.getAllInteractionContacts.error = null;
-    // },
+    clearGetAllInteractionContactsStatus: (state) => {
+      state.getAllInteractionContacts.status = "idle";
+    },
+    clearGetAllInteractionContactsData: (state) => {
+      state.getAllInteractionContacts.data = null;
+    },
+    clearGetAllInteractionContactsError: (state) => {
+      state.getAllInteractionContacts.error = null;
+    },
+
+    // // clear interaction contacts states
+    clearGetClientAllLeadsStatus: (state) => {
+      state.getClientAllLeads.status = "idle";
+    },
+    clearGetClientAllLeadsData: (state) => {
+      state.getClientAllLeads.data = null;
+    },
+    clearGetClientAllLeadsError: (state) => {
+      state.getClientAllLeads.error = null;
+    },
 
     // clear get all interactions states
     // clearGetAllInteractionsStatus: (state) => {
@@ -193,7 +222,7 @@ const interactionSlice = createSlice({
     clearUpdateInteractionStatus: (state) => {
       state.updateInteraction.status = "idle";
     },
-    clearUpdateInteractionData: () => {
+    clearUpdateInteractionData: (state) => {
       state.updateInteraction.data = null;
     },
     clearUpdateInteractionError: (state) => {

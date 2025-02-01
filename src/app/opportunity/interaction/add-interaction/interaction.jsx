@@ -1,22 +1,40 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Input, Space, Row, Col, Divider } from "antd";
 import {
   ClientSelector,
-  ContactSelector,
   CurrencyAmountInput,
+  LeadSelector,
 } from "@/components";
-import { leadFormRules } from "@/utilities/formValidationRules";
+import { interactionFormRules } from "@/utilities/formValidationRules";
+import { useAddOpportunity } from "@/hooks/deal";
 import { Text } from "@/components";
 import { colorConfig } from "@/config";
-import { useFetchLeadContacts, useAddLead } from "@/hooks/lead";
+import { InputInteraction } from "../components";
+import { useFetchLeadContacts } from "@/hooks/lead";
+import {
+  useFetchClientAllLeads,
+  useUpdateInteraction,
+} from "@/hooks/interaction";
 
-export const CreateDeal = ({ clientLoading, clients }) => {
+export const InteractionForm = ({ clients, loading: clientsLoading }) => {
   const [form] = Form.useForm();
   const [client, setClient] = useState(null);
+  const { loading, onFinish } = useAddOpportunity();
+  const [interactionId, setInteractionId] = useState(null);
+
   const { loading: contactLoading, contacts } = useFetchLeadContacts({
     form,
     client,
+  });
+
+  const { loading: leadsLoading, clientAllLeads } = useFetchClientAllLeads({
+    client,
+    form,
+  });
+
+  const { loading: updateLoading, handleUpdate } = useUpdateInteraction({
+    interactionId,
   });
 
   const handleClientChange = (value) => {
@@ -24,10 +42,25 @@ export const CreateDeal = ({ clientLoading, clients }) => {
     form.setFieldsValue({ contact: null }); // Reset the contact field to null when client changes
   };
 
-  const { onFinish, loading: createLeadLoading } = useAddLead();
+  const handleLeadChange = (value) => {
+    const lead = clientAllLeads.find((lead) => lead?._id == value);
+    console.log("lead", lead);
+    setInteractionId(lead?.interaction?._id);
+    form.setFieldsValue({
+      leadCustomId: lead?.customId,
+      description: lead?.description,
+      salesTopLine: lead?.salesTopLine,
+      salesOffset: lead?.salesOffset,
+    });
+  };
 
   return (
-    <Form layout="vertical" initialValues={{}} form={form} onFinish={onFinish}>
+    <Form
+      layout="vertical"
+      initialValues={{}}
+      form={form}
+      onFinish={handleUpdate}
+    >
       <Space>
         <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
           Client Details
@@ -42,25 +75,26 @@ export const CreateDeal = ({ clientLoading, clients }) => {
             leadPage={true}
             label="Client Name"
             setInput={handleClientChange}
-            rules={leadFormRules.client}
+            rules={interactionFormRules.client}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
-          <ContactSelector
-            name="contact"
-            label="Contact"
-            leadContacts={contacts}
-            leadPage={true}
-            rules={leadFormRules.contact}
+          <LeadSelector
+            name="lead"
+            clientAllLeads={clientAllLeads}
+            interactionPage={true}
+            label="Project Name"
+            setInput={handleLeadChange}
+            rules={interactionFormRules.projectName}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <Form.Item
-            name="projectName"
-            label="Project Name"
-            rules={leadFormRules.projectName}
+            name="leadCustomId"
+            label="Lead"
+            rules={interactionFormRules.leadCustomId}
           >
-            <Input />
+            <Input disabled />
           </Form.Item>
         </Col>
       </Row>
@@ -68,7 +102,7 @@ export const CreateDeal = ({ clientLoading, clients }) => {
       {/* Section: Sales Information */}
       <Space>
         <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
-          About Opportunity
+          About
         </Text>
       </Space>
       <Divider style={{ margin: "10px" }} />
@@ -77,19 +111,28 @@ export const CreateDeal = ({ clientLoading, clients }) => {
           <Form.Item
             name="description"
             label="Brief about the opportunity"
-            rules={leadFormRules.about}
+            rules={interactionFormRules.about}
           >
-            <Input.TextArea rows={4} />
+            <Input.TextArea disabled rows={4} />
           </Form.Item>
         </Col>
+      </Row>
 
-        {/* <Row gutter={24}> */}
-        <Col xs={24} sm={24} md={24} lg={24}>
-          <Form.Item
-            name="source"
-            label="How did we receive this opportunity ?"
-          >
-            <Input />
+      {/* Section: Expected Date */}
+      <Space>
+        <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
+          Client Interactions
+        </Text>
+      </Space>
+      <Divider style={{ margin: "10px" }} />
+
+      <Row gutter={24}>
+        <Col span={24}>
+          <Form.Item name="interactions">
+            <InputInteraction
+              contacts={contacts}
+              buttonText={"Add Interaction"}
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -106,14 +149,16 @@ export const CreateDeal = ({ clientLoading, clients }) => {
           <CurrencyAmountInput
             name="salesTopLine"
             label="Sales Top-Line"
-            rules={leadFormRules.salesTopLine}
+            rules={interactionFormRules.salesTopLine}
+            disabled={true}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
             name="salesOffset"
             label="Sales Offset"
-            rules={leadFormRules.salesOffset}
+            rules={interactionFormRules.salesOffset}
+            disabled={true}
           />
         </Col>
       </Row>
@@ -123,18 +168,14 @@ export const CreateDeal = ({ clientLoading, clients }) => {
         <Col span={24}>
           <Form.Item>
             <Space>
-              <Button
-                loading={createLeadLoading}
-                type="primary"
-                htmlType="submit"
-              >
+              <Button loading={loading} type="primary" htmlType="submit">
                 Submit
               </Button>
               <Button
                 type="default"
                 htmlType="button"
                 onClick={() => form.resetFields()}
-                disabled={createLeadLoading}
+                disabled={loading}
               >
                 Reset
               </Button>

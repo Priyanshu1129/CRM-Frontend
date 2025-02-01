@@ -43,6 +43,18 @@ const urls = {
   REGISTRATION_UPDATE: "/registration/update",
 
   // Mention Routes (Business Development)
+  LEAD: "/opportunity/lead/all-lead",
+  LEAD_ADD: "/opportunity/lead/add-lead",
+  // LEAD_DETAILS: "/opportunity/lead/lead-details/:id",
+  // LEAD_UPDATE: "/opportunity/lead/update",
+
+  // Mention Routes (Business Development)
+  // INTERACTION: "/opportunity/interaction",
+  INTERACTION_ADD: "/opportunity/interaction/add-interaction",
+  // INTERACTION_DETAILS: "/opportunity/interaction/interaction-details/:id",
+  // INTERACTION_UPDATE: "/opportunity/interaction/update",
+
+  // Mention Routes (Business Development)
   MENTION: "/opportunity/mention",
   MENTION_ADD: "/opportunity/mention/add-mention",
   MENTION_DETAILS: "/opportunity/mention/mention-details/:id",

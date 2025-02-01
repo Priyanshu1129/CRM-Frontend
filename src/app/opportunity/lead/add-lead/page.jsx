@@ -1,32 +1,8 @@
 "use client";
 import React from "react";
-import {
-  Button,
-  Form,
-  Input,
-  Space,
-  Grid,
-  theme,
-  Row,
-  Col,
-  DatePicker,
-  Divider,
-} from "antd";
+import { Button, Form, Space, Grid, theme, Row, Col, Divider } from "antd";
 import { FormHeader } from "@/components";
-import { RevenueInput } from "../components/revenueInput";
-import {
-  SolutionSelector,
-  IndustrySelector,
-  TerritorySelector,
-  SubSolutionSelector,
-  SalesStageSelector,
-  SalesSubStageSelector,
-  UserSelector,
-  ClientSelector,
-  ContactSelector,
-  CurrencyAmountInput,
-} from "@/components";
-import { opportunityFormRules } from "@/utilities/formValidationRules";
+import { IndustrySelector, TerritorySelector } from "@/components";
 import { useFetchLeadClients } from "@/hooks/lead/useFetchLeadClients";
 import { Text } from "@/components";
 import { CreateDeal } from "./create-lead";
@@ -34,12 +10,12 @@ import { colorConfig } from "@/config";
 
 const AddLead = () => {
   const screens = Grid.useBreakpoint();
-
+  const [form] = Form.useForm();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { loading, clients, onFinish, form } = useFetchLeadClients({ Form });
+  const { loading, clients, onFinish } = useFetchLeadClients({ form });
 
   return (
     <div
@@ -77,7 +53,7 @@ const AddLead = () => {
           {/* Section: Basic Information */}
           <Space>
             <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
-              Select SIT
+              Select Territory and Industry
             </Text>
           </Space>
           <Divider style={{ margin: "10px" }} />

@@ -45,6 +45,7 @@ import { systemConfigReducer } from "./slices/systemSlice";
 import { targetReducer } from "./slices/targetSlice";
 import { trendViewReducer } from "./slices/dashboardSlice/trendView";
 import { profileReducer } from "./slices/profileSIice";
+import { interactionReducer } from "./slices/interactionSlice";
 
 const store = configureStore({
   reducer: {
@@ -85,6 +86,7 @@ const store = configureStore({
     systemConfig: systemConfigReducer,
     target: targetReducer,
     lead: leadReducer,
+    interaction: interactionReducer,
   },
 });
 

@@ -2,11 +2,11 @@ import urls from "./urls";
 
 const breadcrumbNames = {
   // Dashboard Routes
-  [urls.DASHBOARD_PIPE_VIEW]: ["Home", "Live Reports", "Pipe View"],
-  [urls.DASHBOARD_FUNNEL_VIEW]: ["Home", "Live Reports", "Funnel View"],
-  [urls.DASHBOARD_SUMMARY_VIEW]: ["Home", "Live Reports", "Summary View"],
-  [urls.DASHBOARD_TREND_VIEW]: ["Home", "Live Reports", "Trend View"],
-  [urls.DASHBOARD_LEADERBOARD]: ["Home", "Live Reports", "Leaderboard"],
+  [urls.DASHBOARD_PIPE_VIEW]: ["Home", "Live Metrics", "Pipe View"],
+  [urls.DASHBOARD_FUNNEL_VIEW]: ["Home", "Live Metrics", "Funnel View"],
+  [urls.DASHBOARD_SUMMARY_VIEW]: ["Home", "Live Metrics", "Summary View"],
+  [urls.DASHBOARD_TREND_VIEW]: ["Home", "Live Metrics", "Trend View"],
+  [urls.DASHBOARD_LEADERBOARD]: ["Home", "Live Metrics", "Leaderboard"],
 
   // Tender Routes
   [urls.TENDER]: ["Home", "Tenders"],
@@ -35,6 +35,19 @@ const breadcrumbNames = {
     "Home",
     "Registrations",
     "Registration Details",
+  ],
+
+  // Mention Routes (Business Development)
+  [urls.LEAD]: ["Home", "Opportunities", "Leads"],
+  [urls.LEAD_ADD]: ["Home", "Opportunities", "Leads", "Add Lead"],
+
+  // Mention Routes (Business Development)
+
+  [urls.INTERACTION_ADD]: [
+    "Home",
+    "Opportunities",
+    "Interactions",
+    "Add Interaction",
   ],
 
   // Mention Routes (Business Development)

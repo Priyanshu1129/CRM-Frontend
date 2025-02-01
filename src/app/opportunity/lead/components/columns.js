@@ -3,7 +3,6 @@ import { convertCurrency } from "@/utilities/convertCurrency";
 
 const calculateDynamicWidth = (title, dataIndex, data) => {
   const titleLength = title.length;
-
   // Find the max length of values in the column
   const maxValueLength = data?.reduce((maxLength, row) => {
     const value = dataIndex.includes(".")
@@ -54,22 +53,28 @@ export const getColumns = ({ selectedCurrency, data }) => {
       width: calculateDynamicWidth("Client", "client.name", data),
     },
     {
+      title: "Contact",
+      dataIndex: ["contact", "name"],
+      key: "contact",
+      width: calculateDynamicWidth("Contact", "contact.name", data),
+    },
+    {
       title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
       width: calculateDynamicWidth("Project Name", "projectName", data),
     },
-    {
-      title: "Solution",
-      dataIndex: ["solution", "label"],
-      key: "solution",
-      render: (text) => text || "N/A",
-      width: calculateDynamicWidth("Solution", "solution.label", data),
-    },
+    // {
+    //   title: "Solution",
+    //   dataIndex: ["solution", "label"],
+    //   key: "solution",
+    //   render: (text) => text || "N/A",
+    //   width: calculateDynamicWidth("Solution", "solution.label", data),
+    // },
     {
       title: "About",
-      dataIndex: "about",
-      key: "about",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: `Sales Top Line (${selectedCurrency?.key})`,
@@ -90,8 +95,8 @@ export const getColumns = ({ selectedCurrency, data }) => {
     },
     {
       title: `Offsets (${selectedCurrency?.key})`,
-      dataIndex: "offsets",
-      key: "offsets",
+      dataIndex: "salesOffset",
+      key: "salesOffset",
       render: (value) =>
         value || value == 0
           ? convertCurrency({
@@ -100,8 +105,8 @@ export const getColumns = ({ selectedCurrency, data }) => {
             })
           : "N/A",
       width: calculateDynamicWidth(
-        `Offsets (${selectedCurrency?.key})`,
-        "offsets",
+        `Sales Offsets (${selectedCurrency?.key})`,
+        "salesOffset",
         data
       ),
     },

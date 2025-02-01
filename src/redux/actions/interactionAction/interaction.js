@@ -4,72 +4,76 @@ import { axiosRequest } from "@/utilities/axiosHelper";
 
 const route = `${serverURL}`;
 
-// export const getAllInteractionClients =
-//   ({ industry = "", territory = "" }) =>
-//   async (dispatch) => {
-//     try {
-//       dispatch(interactionActions.getAllInteractionClientsRequest());
-//       console.log("getAllInteraction-Clients-request");
+export const getAllInteractionClients =
+  ({ industry = "", territory = "" }) =>
+  async (dispatch) => {
+    try {
+      dispatch(interactionActions.getAllInteractionClientsRequest());
+      console.log("getAllInteraction-Clients-request");
 
-//       // Use axiosRequest helper function
-//       const response = await axiosRequest(
-//         dispatch,
-//         "GET",
-//         `${route}/client`,
-//         null,
-//         {
-//           config: true,
-//           industry,
-//           territory,
-//         }
-//       );
+      // Use axiosRequest helper function
+      const response = await axiosRequest(
+        dispatch,
+        "GET",
+        `${route}/client`,
+        null,
+        {
+          config: true,
+          industry,
+          territory,
+        }
+      );
 
-//       console.log("get-all-interaction-client-res-data", response);
+      console.log("get-all-interaction-client-res-data", response);
 
-//       dispatch(interactionActions.getAllInteractionClientsSuccess(response.clients));
-//     } catch (error) {
-//       console.log("getAllInteraction-Clients-error", error);
+      dispatch(
+        interactionActions.getAllInteractionClientsSuccess(response.clients)
+      );
+    } catch (error) {
+      console.log("getAllInteraction-Clients-error", error);
 
-//       dispatch(
-//         interactionActions.getAllInteractionClientsFailure(
-//           error.message || "Failed to fetch clients data"
-//         )
-//       );
-//     }
-//   };
+      dispatch(
+        interactionActions.getAllInteractionClientsFailure(
+          error.message || "Failed to fetch clients data"
+        )
+      );
+    }
+  };
 
-// export const getAllInteractionContacts =
-//   ({ client }) =>
-//   async (dispatch) => {
-//     try {
-//       dispatch(interactionActions.getAllInteractionContactsRequest());
-//       console.log("getAllInteraction-Contact-request");
+export const getAllInteractionContacts =
+  ({ client }) =>
+  async (dispatch) => {
+    try {
+      dispatch(interactionActions.getAllInteractionContactsRequest());
+      console.log("getAllInteraction-Contact-request");
 
-//       // Use axiosRequest helper function
-//       const response = await axiosRequest(
-//         dispatch,
-//         "GET",
-//         `${route}/contact`,
-//         null,
-//         {
-//           config: true,
-//           client,
-//         }
-//       );
+      // Use axiosRequest helper function
+      const response = await axiosRequest(
+        dispatch,
+        "GET",
+        `${route}/contact`,
+        null,
+        {
+          config: true,
+          client,
+        }
+      );
 
-//       console.log("get-all-interaction-contact-res-data", response);
+      console.log("get-all-interaction-contact-res-data", response);
 
-//       dispatch(interactionActions.getAllInteractionContactsSuccess(response.data));
-//     } catch (error) {
-//       console.log("getAllInteraction-Contact-error", error);
+      dispatch(
+        interactionActions.getAllInteractionContactsSuccess(response.data)
+      );
+    } catch (error) {
+      console.log("getAllInteraction-Contact-error", error);
 
-//       dispatch(
-//         interactionActions.getAllInteractionContactsFailure(
-//           error.message || "Failed to fetch contact data"
-//         )
-//       );
-//     }
-//   };
+      dispatch(
+        interactionActions.getAllInteractionContactsFailure(
+          error.message || "Failed to fetch contact data"
+        )
+      );
+    }
+  };
 
 // export const getAllInteractions = () => async (dispatch) => {
 //   try {
@@ -101,6 +105,39 @@ const route = `${serverURL}`;
 //     );
 //   }
 // };
+
+export const getClientAllLeads =
+  ({ config = true, client }) =>
+  async (dispatch) => {
+    try {
+      dispatch(interactionActions.getClientAllLeadsRequest());
+      console.log("get-client-all-Leads-request");
+
+      // Use axiosRequest helper function
+      const response = await axiosRequest(
+        dispatch,
+        "GET",
+        `${route}/lead`,
+        null,
+        {
+          config,
+          client,
+        }
+      );
+
+      console.log("get-client-all-lead-res-data", response);
+
+      dispatch(interactionActions.getClientAllLeadsSuccess(response.data));
+    } catch (error) {
+      console.log("getAllLead-error", error);
+
+      dispatch(
+        interactionActions.getClientAllLeadsFailure(
+          error.message || "Failed to fetch client all leads"
+        )
+      );
+    }
+  };
 
 // export const createInteraction = (interactionData) => async (dispatch) => {
 //   try {
@@ -134,9 +171,10 @@ const route = `${serverURL}`;
 // };
 
 export const updateInteraction =
-  (interactionData, interactionId) => async (dispatch) => {
+  ({ interactionId, data }) =>
+  async (dispatch) => {
     try {
-      console.log("update-interactionData-req", interactionData);
+      console.log("update-interactionData-req", data);
       dispatch(interactionActions.updateInteractionRequest());
 
       // Make the API call using the axiosRequest helper
@@ -144,11 +182,11 @@ export const updateInteraction =
         dispatch,
         "PUT", // HTTP method for PUT request
         `${route}/interaction/${interactionId}`, // Endpoint for updating interaction by ID
-        interactionData, // Request body (interactionData)
+        data, // Request body
         null // No query parameters
       );
 
-      console.log("update-interaction-res-data", response.data);
+      console.log("update-interaction-res-data", response);
       dispatch(interactionActions.getInteractionSuccess(response.data));
       dispatch(interactionActions.updateInteractionSuccess(response.data));
     } catch (error) {
