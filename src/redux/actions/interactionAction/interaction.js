@@ -139,37 +139,6 @@ export const getClientAllLeads =
     }
   };
 
-// export const createInteraction = (interactionData) => async (dispatch) => {
-//   try {
-//     console.log("create-interaction-req", interactionData);
-//     dispatch(interactionActions.createInteractionRequest());
-
-//     // Make the API call using the axiosRequest helper
-//     const response = await axiosRequest(
-//       dispatch,
-//       "POST", // HTTP method for POST request
-//       `${route}/interaction`, // Endpoint for creating interaction
-//       interactionData, // Request body (interactionData)
-//       null // No query parameters
-//     );
-
-//     console.log("create-interaction-res-data", response);
-//     dispatch(interactionActions.createInteractionSuccess(response.data.data));
-//     // dispatch(
-//     //   interactionActions.updateOpportunityList({
-//     //     type: "add",
-//     //     payload: response.data,
-//     //   })
-//     // );
-//   } catch (error) {
-//     dispatch(
-//       interactionActions.createInteractionFailure(
-//         error.message || "An error occurred"
-//       )
-//     );
-//   }
-// };
-
 export const updateInteraction =
   ({ interactionId, data }) =>
   async (dispatch) => {

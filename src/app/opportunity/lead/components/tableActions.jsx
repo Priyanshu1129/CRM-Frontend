@@ -102,6 +102,7 @@ export const LeadsTableActions = ({
           onClick={handleConvertIntoLead}
           icon={<ArrowRightOutlined />}
           iconPosition="end"
+          disabled={record?.converted}
         >
           Convert into Deal
         </Button>

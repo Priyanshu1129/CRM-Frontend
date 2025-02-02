@@ -279,7 +279,7 @@ export const SalesStageSelector = ({ name, label, rules, form }) => {
   // this helps to algn the sales sub stage with the selected sales stage
   const handleSelectChange = (id) => {
     // here i want to set the form.salesSubStage value to null here
-    form.setFieldsValue({ salesSubStage: null });
+    form?.setFieldsValue({ salesSubStage: null });
     dispatch(salesSubStageActions.filterSalesSubStages(id));
   };
 
