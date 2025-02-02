@@ -5,6 +5,7 @@ import {
   ClientSelector,
   ContactSelector,
   CurrencyAmountInput,
+  SolutionSelector,
 } from "@/components";
 import { leadFormRules } from "@/utilities/formValidationRules";
 import { Text } from "@/components";
@@ -53,6 +54,9 @@ export const CreateDeal = ({ clientLoading, clients }) => {
             leadPage={true}
             rules={leadFormRules.contact}
           />
+        </Col>
+        <Col xs={24} sm={12} md={8} lg={6}>
+          <SolutionSelector name="solution" label="Solution" />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <Form.Item

@@ -55,7 +55,7 @@ const urls = {
   // INTERACTION_UPDATE: "/opportunity/interaction/update",
 
   // Mention Routes (Business Development)
-  MENTION: "/opportunity/mention",
+  MENTION: "/opportunity/mention/all-mentions",
   MENTION_ADD: "/opportunity/mention/add-mention",
   MENTION_DETAILS: "/opportunity/mention/mention-details/:id",
   MENTION_UPDATE: "/opportunity/mention/update",

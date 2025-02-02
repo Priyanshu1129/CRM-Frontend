@@ -11,7 +11,7 @@ import { useCheckPermission } from "@/hooks/permissions/useCheckPermission";
 import { useDispatch } from "react-redux";
 import { userActions } from "@/redux/slices/userSlice";
 import { configurationActions } from "@/redux/slices/configurationSlice";
-
+import { leadActions } from "@/redux/slices/leadSlice";
 export const LeadsTableActions = ({
   setUpdateConfigData,
   updateConfigData,
@@ -31,7 +31,12 @@ export const LeadsTableActions = ({
   const dispatch = useDispatch();
   const canSeeDetails = useCheckPermission(permissionUrl || showUrl);
   const canDelete = useCheckPermission(deleteUrl);
-  console.log("delete popup for : ", deletePopupFor);
+
+  const handleConvertIntoLead = () => {
+    dispatch(leadActions.setConvertLead(record));
+    router.push("/deal/add-deal");
+  };
+
   return (
     <>
       <Space>
@@ -94,7 +99,7 @@ export const LeadsTableActions = ({
         <Button
           size="medium"
           type="primary"
-          onClick={() => {}}
+          onClick={handleConvertIntoLead}
           icon={<ArrowRightOutlined />}
           iconPosition="end"
         >

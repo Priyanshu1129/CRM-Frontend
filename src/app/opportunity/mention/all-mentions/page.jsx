@@ -2,11 +2,11 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ListHeader } from "@/components";
-import { BusinessDevelopmentTableView } from "./components";
+import { BusinessDevelopmentTableView } from "../components";
 import { getAllBusinessDevelopments } from "@/redux/actions/businessDevelopmentAction";
 import { businessDevelopmentActions } from "@/redux/slices/businessDevelopmentSlice";
 import { notification } from "antd";
-import { Filter } from "./components/filter";
+import { Filter } from "../components/filter";
 
 const BusinessDevelopmentMaster = () => {
   const [loading, setLoading] = useState(false);
@@ -125,11 +125,12 @@ const BusinessDevelopmentMaster = () => {
     >
       <ListHeader
         toPath={"/opportunity/mention/add-mention"}
-        buttonText={"Add New Mention"}
         setRefresh={setRefresh}
         setFilter={setFilter}
         setFilters={setFilters}
         filters={filters}
+        backButton={true}
+        addButton={false}
         FilterComponent={Filter}
       />
       <div

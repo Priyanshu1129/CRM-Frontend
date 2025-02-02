@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import {
   Button,
-  Form,
   Input,
   Space,
   Grid,
   theme,
   Row,
+  Form,
   Col,
   DatePicker,
   Divider,
@@ -34,14 +34,13 @@ import { colorConfig } from "@/config";
 
 const AddDeal = () => {
   const [uploadModal, setUploadModal] = useState(false);
-  const [form] = Form.useForm();
   const screens = Grid.useBreakpoint();
-
+  const [form] = Form.useForm();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { loading, onFinish } = useAddOpportunity();
+  const { loading, onFinish } = useAddOpportunity({ form });
 
   return (
     <div

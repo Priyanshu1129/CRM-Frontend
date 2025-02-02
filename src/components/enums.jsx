@@ -24,6 +24,7 @@ export const IndustrySelector = ({
   label,
   rules,
   multiple = false,
+  setInput,
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -54,6 +55,10 @@ export const IndustrySelector = ({
     }
   }, [status, data]);
 
+  const handleSelect = (value) => {
+    if (setInput) setInput(value);
+  };
+
   return (
     <Form.Item
       style={{ width: "100%" }}
@@ -66,6 +71,8 @@ export const IndustrySelector = ({
         mode={multiple ? "multiple" : undefined}
         showSearch
         loading={loading}
+        onClear={() => setInput && setInput(null)}
+        onSelect={handleSelect}
         optionFilterProp="children"
         filterOption={(input, option) =>
           option?.children?.toLowerCase().includes(input.toLowerCase())
@@ -359,7 +366,13 @@ export const SalesSubStageSelector = ({ name, label, rules }) => {
   );
 };
 
-export const TerritorySelector = ({ name, label, rules, multiple = false }) => {
+export const TerritorySelector = ({
+  setInput,
+  name,
+  label,
+  rules,
+  multiple = false,
+}) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { status, data, error } = useSelector(
@@ -401,6 +414,8 @@ export const TerritorySelector = ({ name, label, rules, multiple = false }) => {
         filterOption={(input, option) =>
           option?.children?.toLowerCase().includes(input.toLowerCase())
         }
+        onClear={() => setInput && setInput(null)}
+        onSelect={(value) => setInput && setInput(value)}
       >
         {territories?.map(({ label, _id }, idx) => (
           <Select.Option key={idx} value={_id}>

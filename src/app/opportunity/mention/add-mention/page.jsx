@@ -118,7 +118,10 @@ const AddBusinessDevelopment = () => {
       <FormHeader
         fileUpload={true}
         setUploadModal={setUploadModal}
-        backButtonText={"Return"}
+        listButton={true}
+        listButtonText="Show All Mentions"
+        backButton={false}
+        listButtonUrl="/opportunity/mention/all-mentions"
       />
       <Space
         direction="vertical"

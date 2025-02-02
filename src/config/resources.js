@@ -75,7 +75,7 @@ export const resources = [
         icon: <InteractionOutlined />,
       },
       {
-        key: "opportunity/mention",
+        key: "opportunity/mention/add-mention",
         label: "Mentions",
         icon: <ProjectOutlined />,
       },

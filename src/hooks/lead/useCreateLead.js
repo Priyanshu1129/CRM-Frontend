@@ -50,7 +50,6 @@ export const useAddLead = () => {
       salesOffset: offsetsInUSD,
       // entryDate: new Date().toISOString(),
     };
-
     dispatch(createLead(newValues));
   };
 

@@ -115,7 +115,7 @@ export const getColumns = ({ selectedCurrency, data }) => {
       key: "operation",
       fixed: "right",
 
-      render: (_, record) => <LeadsTableActions />,
+      render: (_, record) => <LeadsTableActions record={record} />,
     },
   ];
   return columns;

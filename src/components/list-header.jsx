@@ -22,7 +22,7 @@ export const ListHeader = ({
   addButton = true,
   type = "normal",
   backButton = false,
-  backButtonText = true,
+  backButtonText = "Return",
   setShowCreateConfigPopup,
   configType,
 }) => {

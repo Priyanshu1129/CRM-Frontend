@@ -36,6 +36,9 @@ const initialLeadState = {
     error: null,
     data: null,
   },
+  convertLead: {
+    data: null,
+  },
 };
 
 const leadSlice = createSlice({
@@ -209,6 +212,14 @@ const leadSlice = createSlice({
     },
     clearDeleteLeadError: (state) => {
       state.deleteLead.error = null;
+    },
+
+    // convert lead states
+    setConvertLead: (state, action) => {
+      state.convertLead.data = action.payload;
+    },
+    unsetConvertLead: (state) => {
+      state.convertLead.data = null;
     },
   },
 });

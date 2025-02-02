@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Space, Grid, theme, Row, Col, Divider } from "antd";
 import { FormHeader } from "@/components";
 import { IndustrySelector, TerritorySelector } from "@/components";
@@ -10,12 +10,18 @@ import { colorConfig } from "@/config";
 
 const AddLead = () => {
   const screens = Grid.useBreakpoint();
+  const [territory, setTerritory] = useState(null);
+  const [industry, setIndustry] = useState(null);
   const [form] = Form.useForm();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { loading, clients, onFinish } = useFetchLeadClients({ form });
+  const { loading, clients } = useFetchLeadClients({
+    form,
+    territory,
+    industry,
+  });
 
   return (
     <div
@@ -48,7 +54,7 @@ const AddLead = () => {
           layout="vertical"
           initialValues={{}}
           form={form}
-          onFinish={onFinish}
+          // onFinish={() => {}}
         >
           {/* Section: Basic Information */}
           <Space>
@@ -62,6 +68,7 @@ const AddLead = () => {
               <TerritorySelector
                 name="territory"
                 label="Territory"
+                setInput={setTerritory}
                 // rules={opportunityFormRules.solution}
               />
             </Col>
@@ -69,23 +76,9 @@ const AddLead = () => {
               <IndustrySelector
                 name="industry"
                 label="Industry"
+                setInput={setIndustry}
                 // rules={opportunityFormRules.solution}
               />
-            </Col>
-            <Col
-              xs={24}
-              sm={12}
-              md={8}
-              lg={6}
-              style={{ display: "flex", alignItems: "flex-end" }}
-            >
-              <Form.Item>
-                <Space>
-                  <Button loading={loading} type="primary" htmlType="submit">
-                    Fetch Clients
-                  </Button>
-                </Space>
-              </Form.Item>
             </Col>
           </Row>
         </Form>

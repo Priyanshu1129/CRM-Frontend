@@ -5,15 +5,43 @@ import { createOpportunity } from "@/redux/actions/opportunityAction";
 import { notification } from "antd";
 import { convertRevenue } from "@/utilities/convertCurrency";
 import { convertCurrency } from "@/utilities/convertCurrency";
+import { leadActions } from "@/redux/slices/leadSlice";
 
-export const useAddOpportunity = () => {
+export const useAddOpportunity = ({ form }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const { data: leadData } = useSelector((state) => state.lead.convertLead);
   const { currency } = useSelector((state) => state.currency.viewCurrency);
 
   const { status, error } = useSelector(
     (state) => state.opportunity.createOpportunity
   );
+
+  useEffect(() => {
+    console.log("leaddata", leadData);
+    if (leadData) {
+      const dealInitialValues = {
+        client: leadData?.client?._id,
+        customId: leadData?.customId,
+        projectName: leadData?.projectName,
+        solution: leadData?.solution?._id,
+        // salesChamp: opportunity.salesChamp?._id,
+        salesTopLine: convertCurrency({
+          value: leadData?.salesTopLine,
+          selectedCurrency: currency?.value,
+        }),
+        offsets: convertCurrency({
+          value: leadData?.salesOffset,
+          selectedCurrency: currency?.value,
+        }),
+      };
+      form.setFieldsValue(dealInitialValues);
+    }
+
+    return () => {
+      dispatch(leadActions.unsetConvertLead());
+    };
+  }, [leadData, form, currency]);
 
   useEffect(() => {
     if (status === "pending") {
@@ -59,6 +87,7 @@ export const useAddOpportunity = () => {
       salesTopLine: salesTopLineInUSD,
       offsets: offsetsInUSD,
       // entryDate: new Date().toISOString(),
+      customId: leadData ? leadData?.customId : null,
     };
 
     dispatch(createOpportunity(newValues));

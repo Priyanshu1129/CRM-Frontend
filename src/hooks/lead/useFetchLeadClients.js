@@ -4,7 +4,7 @@ import { notification } from "antd";
 import { getAllLeadClients } from "@/redux/actions/leadAction";
 import { leadActions } from "@/redux/slices/leadSlice";
 
-export const useFetchLeadClients = ({ form }) => {
+export const useFetchLeadClients = ({ form, territory, industry }) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -32,10 +32,11 @@ export const useFetchLeadClients = ({ form }) => {
     }
   }, [dispatch, status, data?.clients, error]);
 
-  const onFinish = () => {
-    const { territory, industry } = form.getFieldsValue();
-    dispatch(getAllLeadClients({ territory, industry }));
-  };
+  useEffect(() => {
+    if (territory || industry)
+      dispatch(getAllLeadClients({ territory, industry }));
+    else setClients(null);
+  }, [territory, industry]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -49,6 +50,5 @@ export const useFetchLeadClients = ({ form }) => {
   return {
     loading,
     clients,
-    onFinish,
   };
 };
