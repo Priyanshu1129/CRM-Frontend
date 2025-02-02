@@ -187,7 +187,7 @@ export const updateInteraction =
       );
 
       console.log("update-interaction-res-data", response);
-      dispatch(interactionActions.getInteractionSuccess(response.data));
+      // dispatch(interactionActions.getInteractionSuccess(response.data));
       dispatch(interactionActions.updateInteractionSuccess(response.data));
     } catch (error) {
       dispatch(
