@@ -43,7 +43,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
   };
 
   const handleLeadChange = (value) => {
-    const lead = clientAllLeads.find((lead) => lead?._id == value);
+    const lead = clientAllLeads.find((lead) => lead?._id.toString() == value);
     console.log("lead", lead);
     setInteractionId(lead?.interaction?._id);
     form.setFieldsValue({
@@ -51,6 +51,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
       description: lead?.description,
       salesTopLine: lead?.salesTopLine,
       salesOffset: lead?.salesOffset,
+      interactions : lead?.interaction?.interactions
     });
   };
 
