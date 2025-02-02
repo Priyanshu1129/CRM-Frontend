@@ -4,7 +4,7 @@ import { notification } from "antd";
 import { getAllInteractionClients } from "@/redux/actions/interactionAction";
 import { interactionActions } from "@/redux/slices/interactionSlice";
 
-export const useFetchInteractionClients = ({ form }) => {
+export const useFetchInteractionClients = ({ territory, industry }) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -32,10 +32,11 @@ export const useFetchInteractionClients = ({ form }) => {
     }
   }, [dispatch, status, data?.clients, error]);
 
-  const onFinish = () => {
-    const { territory, industry } = form.getFieldsValue();
-    dispatch(getAllInteractionClients({ territory, industry }));
-  };
+  useEffect(() => {
+    if (territory || industry)
+      dispatch(getAllInteractionClients({ territory, industry }));
+    else setClients([]);
+  }, [territory, industry]);
 
   // Cleanup on unmount
   useEffect(() => {
@@ -50,6 +51,5 @@ export const useFetchInteractionClients = ({ form }) => {
   return {
     loading,
     clients,
-    onFinish,
   };
 };

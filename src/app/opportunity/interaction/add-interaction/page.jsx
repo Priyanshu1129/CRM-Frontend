@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form, Space, Grid, theme, Row, Col, Divider } from "antd";
 import { IndustrySelector, TerritorySelector } from "@/components";
 import { Text } from "@/components";
@@ -9,13 +9,16 @@ import { useFetchInteractionClients } from "@/hooks/interaction";
 
 const AddInteraction = () => {
   const screens = Grid.useBreakpoint();
+  const [territory, setTerritory] = useState(null);
+  const [industry, setIndustry] = useState(null);
   const [form] = Form.useForm();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const { loading, clients, onFinish } = useFetchInteractionClients({
-    form,
+  const { loading, clients } = useFetchInteractionClients({
+    territory,
+    industry,
   });
 
   return (
@@ -39,12 +42,7 @@ const AddInteraction = () => {
           scrollbarWidth: "none",
         }}
       >
-        <Form
-          layout="vertical"
-          initialValues={{}}
-          form={form}
-          onFinish={onFinish}
-        >
+        <Form layout="vertical" initialValues={{}} form={form}>
           {/* Section: Basic Information */}
           <Space>
             <Text style={{ color: colorConfig?.primary, fontWeight: "500" }}>
@@ -57,6 +55,7 @@ const AddInteraction = () => {
               <TerritorySelector
                 name="territory"
                 label="Territory"
+                setInput={setTerritory}
                 // rules={opportunityFormRules.solution}
               />
             </Col>
@@ -64,23 +63,9 @@ const AddInteraction = () => {
               <IndustrySelector
                 name="industry"
                 label="Industry"
+                setInput={setIndustry}
                 // rules={opportunityFormRules.solution}
               />
-            </Col>
-            <Col
-              xs={24}
-              sm={12}
-              md={8}
-              lg={6}
-              style={{ display: "flex", alignItems: "flex-end" }}
-            >
-              <Form.Item>
-                <Space>
-                  <Button loading={loading} type="primary" htmlType="submit">
-                    Fetch Clients
-                  </Button>
-                </Space>
-              </Form.Item>
             </Col>
           </Row>
         </Form>
