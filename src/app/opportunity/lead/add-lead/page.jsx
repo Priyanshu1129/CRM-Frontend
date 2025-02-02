@@ -18,7 +18,6 @@ const AddLead = () => {
   } = theme.useToken();
 
   const { loading, clients } = useFetchLeadClients({
-    form,
     territory,
     industry,
   });

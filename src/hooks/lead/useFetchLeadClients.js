@@ -4,7 +4,7 @@ import { notification } from "antd";
 import { getAllLeadClients } from "@/redux/actions/leadAction";
 import { leadActions } from "@/redux/slices/leadSlice";
 
-export const useFetchLeadClients = ({ form, territory, industry }) => {
+export const useFetchLeadClients = ({ territory, industry }) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export const useFetchLeadClients = ({ form, territory, industry }) => {
   useEffect(() => {
     if (territory || industry)
       dispatch(getAllLeadClients({ territory, industry }));
-    else setClients(null);
+    else setClients([]);
   }, [territory, industry]);
 
   // Cleanup on unmount
