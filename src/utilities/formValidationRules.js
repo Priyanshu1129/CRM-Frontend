@@ -87,8 +87,8 @@ export const contactFormRules = {
     { min: 2, message: "Last Name must be at least 2 characters" },
   ],
   gender: [{ required: true, message: "Gender is required" }],
-  clientName: [{ required: true, message: "Client Name is required" }],
-  jobTitle: [{ required: true, message: "Job Title is required" }],
+  clientName: [{ required: false, message: "Client Name is required" }],
+  jobTitle: [{ required: false, message: "Job Title is required" }],
   phone: [
     { required: false, message: "Phone number is required" },
     {
@@ -111,9 +111,9 @@ export const contactFormRules = {
     { required: false, message: "Personal Email is required" },
     { type: "email", message: "Please enter a valid email address" },
   ],
-  archeType: [{ required: true, message: "Arch Type is required" }],
+  archeType: [{ required: false, message: "Arch Type is required" }],
   relationshipDegree: [
-    { required: true, message: "Relationship Degree is required" },
+    { required: false, message: "Relationship Degree is required" },
   ],
   city: [{ required: true, message: "Country is required" }],
   territory: [{ required: true, message: "Please select a territory!" }],

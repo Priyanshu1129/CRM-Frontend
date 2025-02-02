@@ -6,7 +6,8 @@ let actionLabels = {
   READ: "DETAILS VIEW",
   "GET ALL": "LIST VIEW",
   UPDATE: "UPDATE",
-  DELETA: "DELETE",
+  DELETE: "DELETE",
+  "CONVERT INTO LEAD": "CONVERT INTO LEAD",
 };
 
 export const getColumns = ({

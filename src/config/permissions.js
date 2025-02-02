@@ -138,6 +138,12 @@ export const sideBarPermissions = {
   tender: [{ entity: "TENDER", action: ["GET ALL", "CREATE"] }],
 
   // for opportunity mention tab
+  "opportunity/interaction": [
+    { entity: "INTERACTION", action: ["GET ALL", "CREATE"] },
+  ],
+
+  "opportunity/lead": [{ entity: "LEAD", action: ["GET ALL", "CREATE"] }],
+
   "opportunity/mention": [
     { entity: "BUSINESS DEVELOPMENT", action: ["GET ALL", "CREATE"] },
   ],

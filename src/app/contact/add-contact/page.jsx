@@ -215,7 +215,7 @@ const AddContact = ({}) => {
               <ClientSelector
                 name="client"
                 label={<span style={{ fontWeight: "400" }}>Client Name</span>}
-                rules={contactFormRules.contactName}
+                rules={contactFormRules.clientName}
               />
             </Col>
             <Col {...colSpan}>

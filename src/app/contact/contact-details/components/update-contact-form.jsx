@@ -172,7 +172,7 @@ export const UpdateContactForm = ({ contact }) => {
             <ClientSelector
               name="client"
               label="Client Name"
-              rules={contactFormRules.contactName}
+              rules={contactFormRules.clientName}
             />
           </Col>
           <Col {...colSpan}>
