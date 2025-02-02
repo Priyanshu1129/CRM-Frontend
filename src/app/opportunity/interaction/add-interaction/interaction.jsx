@@ -7,7 +7,6 @@ import {
   LeadSelector,
 } from "@/components";
 import { interactionFormRules } from "@/utilities/formValidationRules";
-import { useAddOpportunity } from "@/hooks/deal";
 import { Text } from "@/components";
 import { colorConfig } from "@/config";
 import { InputInteraction } from "../components";
@@ -168,14 +167,14 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
         <Col span={24}>
           <Form.Item>
             <Space>
-              <Button loading={loading} type="primary" htmlType="submit">
+              <Button loading={updateLoading} type="primary" htmlType="submit">
                 Submit
               </Button>
               <Button
                 type="default"
                 htmlType="button"
                 onClick={() => form.resetFields()}
-                disabled={loading}
+                disabled={updateLoading}
               >
                 Reset
               </Button>
