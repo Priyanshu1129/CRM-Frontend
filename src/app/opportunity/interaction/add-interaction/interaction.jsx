@@ -20,7 +20,6 @@ import {
 export const InteractionForm = ({ clients, loading: clientsLoading }) => {
   const [form] = Form.useForm();
   const [client, setClient] = useState(null);
-  const { loading, onFinish } = useAddOpportunity();
   const [interactionId, setInteractionId] = useState(null);
 
   const { loading: contactLoading, contacts } = useFetchLeadContacts({
@@ -51,7 +50,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
       description: lead?.description,
       salesTopLine: lead?.salesTopLine,
       salesOffset: lead?.salesOffset,
-      interactions : lead?.interaction?.interactions
+      interactions: lead?.interaction?.interactions,
     });
   };
 

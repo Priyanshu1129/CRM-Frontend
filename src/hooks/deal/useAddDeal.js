@@ -18,14 +18,12 @@ export const useAddOpportunity = ({ form }) => {
   );
 
   useEffect(() => {
-    console.log("leaddata", leadData);
     if (leadData) {
       const dealInitialValues = {
         client: leadData?.client?._id,
         customId: leadData?.customId,
         projectName: leadData?.projectName,
         solution: leadData?.solution?._id,
-        // salesChamp: opportunity.salesChamp?._id,
         salesTopLine: convertCurrency({
           value: leadData?.salesTopLine,
           selectedCurrency: currency?.value,

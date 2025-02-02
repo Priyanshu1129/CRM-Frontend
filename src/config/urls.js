@@ -43,7 +43,7 @@ const urls = {
   REGISTRATION_UPDATE: "/registration/update",
 
   // Mention Routes (Business Development)
-  LEAD: "/opportunity/lead/all-lead",
+  LEAD: "/opportunity/lead/all-leads",
   LEAD_ADD: "/opportunity/lead/add-lead",
   // LEAD_DETAILS: "/opportunity/lead/lead-details/:id",
   // LEAD_UPDATE: "/opportunity/lead/update",
