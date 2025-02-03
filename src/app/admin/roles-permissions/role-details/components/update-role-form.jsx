@@ -1,10 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Form, Input, Space, Grid, Row, Col } from "antd";
+import { Button, Form, Input, Space, Grid, Row, Col, Typography } from "antd";
 import { roleFormRules } from "@/utilities/formValidationRules";
 import { useUpdateRole } from "@/hooks/adminPanel/roles-Permissions";
 import { useCheckPermission } from "@/hooks/permissions/useCheckPermission";
 import { useSelector } from "react-redux";
+import { fixedRole } from "@/config/fixedRole";
+
+const { Text } = Typography;
 
 export const UpdateRoleForm = ({ role }) => {
   const [form] = Form.useForm();
@@ -29,6 +32,9 @@ export const UpdateRoleForm = ({ role }) => {
       layout="horizontal"
       onFinish={onFinish}
     >
+      {role?.name === fixedRole.ADMIN && (
+        <Text type="danger">You can't change the Admin role name</Text>
+      )}
       <Row gutter={24}>
         <Col span={6} style={{ paddingLeft: 0 }}>
           <Form.Item
@@ -39,20 +45,30 @@ export const UpdateRoleForm = ({ role }) => {
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 12 }}
           >
-            <Input />
+            <Input disabled={role?.name === fixedRole.ADMIN} />
           </Form.Item>
         </Col>
         <Col span={18} style={{ display: "flex", alignItems: "flex-end" }}>
           <Form.Item>
             <Space>
-              <Button type="primary" htmlType="submit" loading={loading}>
+              <Button
+                type="primary"
+                disabled={role?.name === fixedRole.ADMIN}
+                htmlType="submit"
+                loading={loading}
+              >
                 Change Name
               </Button>
               <Button
                 type="default"
                 htmlType="button"
                 onClick={() => form.resetFields()}
-                disabled={loading || !canUpdateRole || isMyRole}
+                disabled={
+                  loading ||
+                  !canUpdateRole ||
+                  isMyRole ||
+                  role?.name === fixedRole.ADMIN
+                }
               >
                 Reset
               </Button>

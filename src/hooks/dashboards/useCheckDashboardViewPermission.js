@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getEntityPermissions } from "@/utilities/checkPermission";
+import { fixedRole } from "@/config/fixedRole";
 
 export const useCheckViewPermissions = (entity) => {
   const { permissions, data } = useSelector((state) => state.auth.authDetails);
@@ -10,7 +11,7 @@ export const useCheckViewPermissions = (entity) => {
   const [myView, setMyView] = useState(false);
 
   useEffect(() => {
-    if (data?.role?.name === "SUPER ADMIN") {
+    if (data?.role?.name === fixedRole.SUPER_ADMIN) {
       setCanSeeAllView(true);
       setCanSeeMyView(true);
     } else if (permissions) {

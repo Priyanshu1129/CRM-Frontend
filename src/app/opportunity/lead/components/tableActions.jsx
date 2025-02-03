@@ -14,7 +14,6 @@ import { userActions } from "@/redux/slices/userSlice";
 import { configurationActions } from "@/redux/slices/configurationSlice";
 import { leadActions } from "@/redux/slices/leadSlice";
 import { useSelector } from "react-redux";
-import { fixedRole } from "@/config/fixedRole";
 
 export const LeadsTableActions = ({
   setUpdateConfigData,
@@ -33,21 +32,15 @@ export const LeadsTableActions = ({
 }) => {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const canSeeDetails = useCheckPermission(permissionUrl || showUrl);
   const canDelete = useCheckPermission(deleteUrl);
-  const { data } = useSelector((state) => state.auth.authDetails);
+  const convertAction = useCheckPermission("/deal/add-deal");
+
   const handleConvertIntoLead = () => {
     dispatch(leadActions.setConvertLead(record));
     router.push("/deal/add-deal");
   };
-
-  const canConvertLead = () => {
-    if (Object.values(fixedRole).includes(data?.role?.name)) return true;
-    return false;
-  };
-  const convertAction = canConvertLead();
-
-  // const anyAction = convertAction || canSeeDetails || canDelete;
 
   return (
     <>

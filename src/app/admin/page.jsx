@@ -5,6 +5,7 @@ import { AdminPanelCard } from "./components";
 import { resources } from "./resource";
 import { getAuthorizedResources } from "@/utilities/checkPermission";
 import { useSelector } from "react-redux";
+import { fixedRole } from "@/config/fixedRole";
 
 const AdminPanel = () => {
   const [authorizedResources, setAuthorizedResources] = useState([]);
@@ -12,7 +13,7 @@ const AdminPanel = () => {
 
   useEffect(() => {
     try {
-      if (data?.role?.name === "SUPER ADMIN") {
+      if (data?.role?.name === fixedRole.SUPER_ADMIN) {
         setAuthorizedResources(resources);
       } else {
         const authorized = getAuthorizedResources(resources, permissions || []);

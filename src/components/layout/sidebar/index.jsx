@@ -7,6 +7,7 @@ import { Title } from "../title";
 const { Sider } = Layout;
 import { colorConfig, resources } from "@/config";
 import { getAuthorizedResources } from "@/utilities/checkPermission";
+import { fixedRole } from "@/config/fixedRole";
 
 const Sidebar = ({ collapsed, setCollapsed }) => {
   const router = useRouter();
@@ -16,7 +17,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
   useEffect(() => {
     try {
-      if (data?.role?.name === "SUPER ADMIN") {
+      if (data?.role?.name === fixedRole.SUPER_ADMIN) {
         setAuthorizedResources(resources);
       } else {
         const authorized = getAuthorizedResources(resources, permissions || []);
