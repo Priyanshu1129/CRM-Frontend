@@ -1,0 +1,213 @@
+/* =======================================
+   Global Reset
+======================================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    scrollbar-width: thin;
+  }
+  
+  body {
+    font-family: "Poppins", sans-serif;
+    color: #007CA6 ; /* Dark text color */
+    background-color: #f8f9fa; /* Light background for the whole page */
+  }
+  
+  #root {
+    padding: 24px;
+  }
+  
+  canvas {
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* =======================================
+     Scrollbar Styles
+  ======================================= */
+  
+  /* WebKit Browsers (Chrome, Safari) */
+  *::-webkit-scrollbar {
+    width: 6px; /* Vertical scrollbar width */
+    height: 6px; /* Horizontal scrollbar height */
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #b0b0b0; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded edges */
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #888; /* Thumb color on hover */
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Scrollbar track background color */
+  }
+  
+  /* Firefox */
+  * {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #b0b0b0 #f1f1f1; /* Thumb and track colors */
+  }
+  
+  /* =======================================
+     Typography
+  ======================================= */
+
+  
+  p, span, a {
+    /* font-weight: 400; Uncomment if needed */
+    line-height: 1.5;
+  }
+  
+  a {
+    color: #007bff; /* Primary blue color for links */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  a:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  
+  .hover-text-go-back-button {
+    color: black;
+    transition: color 0.3s ease; /* Smooth transition */
+  }
+  
+  .hover-text-go-back-button:hover {
+    color: #007CA6 ;
+  }
+  
+  /* =======================================
+     Form Elements
+  ======================================= */
+  
+  /* Remove number input spin buttons for WebKit browsers */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Remove number input spin buttons for Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  /* =======================================
+     Layout and Containers
+  ======================================= */
+  .container {
+    margin: 0 auto; /* Center content */
+    max-width: 1200px; /* Limit width for large screens */
+  }
+  
+  /* =======================================
+     Ant Design Customizations
+  ======================================= */
+  
+  /* General Card Styles */
+  .ant-card {
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02) !important;
+  }
+  
+  /* Table Styles */
+  .ant-table {
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02) !important;
+    margin-bottom: 16px; /* Space below table */
+  }
+  
+  .ant-table-thead > tr > th {
+    background-color: #fafafa; /* Header background */
+    font-weight: bold; /* Bold header text */
+  }
+  
+  /* .ant-table-tbody > tr:nth-child(odd) > td {
+    background-color: #DAF0F3
+    
+  }
+  
+  .ant-table-tbody > tr:nth-child(even) > td {
+    background-color: #ffffff; 
+  } */
+  
+  /* Button Styles */
+  .ant-btn {
+    padding: 10px 20px;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02) !important;
+  }
+  
+  /* Date Picker */
+  .ant-date-picker-suffix {
+    color: red !important; /* Customize date picker color */
+  }
+
+  /* avoid wrapping in table*/
+  /* .ant-table-thead th {
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+  text-align: center;
+  overflow: hidden;
+  padding: 12px;
+  font-weight: bold;
+} */
+
+.ant-table-cell {
+  white-space: nowrap; /* Prevent cell wrapping */
+}
+
+.ant-table {
+  table-layout: auto; /* Allow flexible column widths */
+}
+
+  
+  /* =======================================
+     List Styles
+  ======================================= */
+  ul, ol {
+    padding-left: 20px;
+  }
+  
+  li {
+    margin-bottom: 10px; /* Space between list items */
+  }
+
+
+  /* Custom CSS */
+/* Targeting the breadcrumb link (ant-breadcrumb-link) */
+.ant-breadcrumb .ant-breadcrumb-link {
+  margin-bottom: 0; /* Ensures no extra spacing between items */
+}
+
+/* Optional: If any list items (li) have default margins, override them */
+.ant-breadcrumb li {
+  margin-bottom: 0; /* Ensures uniform spacing across all list items */
+}
+
+.ant-table-column-sort .ant-table-column-title {
+  color: #007CA6 !important; /* Highlight color for title when sorted */
+}
+
+/* .ant-table {
+  border-color: #e7e7e7;
+}
+
+.ant-table td,
+.ant-table th {
+  border-color: #f0f0f0 !important; 
+} */
+
+/* Customizing vertical padding of table cells */
+.ant-table-cell {
+  padding-top: 12px !important; /* Reduce top padding */
+  padding-bottom: 12px !important; /* Reduce bottom padding */
+}
