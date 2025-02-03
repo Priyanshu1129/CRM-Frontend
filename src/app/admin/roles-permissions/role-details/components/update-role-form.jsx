@@ -33,7 +33,7 @@ export const UpdateRoleForm = ({ role }) => {
       onFinish={onFinish}
     >
       {role?.name === fixedRole.ADMIN && (
-        <Text type="danger">You can't change the Admin role name</Text>
+        <Text type="danger">You can&apos;t change the Admin role name</Text>
       )}
       <Row gutter={24}>
         <Col span={6} style={{ paddingLeft: 0 }}>
