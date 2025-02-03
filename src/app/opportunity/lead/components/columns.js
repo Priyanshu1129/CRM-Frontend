@@ -54,9 +54,11 @@ export const getColumns = ({ selectedCurrency, data }) => {
     },
     {
       title: "Contact",
-      dataIndex: ["contact", "name"],
+      dataIndex: "contact",
       key: "contact",
-      width: calculateDynamicWidth("Contact", "contact.name", data),
+      render: (contact) =>
+        contact ? `${contact.firstName} ${contact.lastName}` : "N/A",
+      width: calculateDynamicWidth("Contact", "contact.firstName", data),
     },
     {
       title: "Project Name",

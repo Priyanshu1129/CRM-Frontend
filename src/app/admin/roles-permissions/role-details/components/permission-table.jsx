@@ -64,29 +64,29 @@ export const PermissionTable = ({ role, permissionEntities }) => {
     // console.log("module check", newCheckedActions);
   };
 
-  // Handle individual action checkbox change
-  const oldHandleActionCheck = (rowIndex, action, checked) => {
-    const newCheckedActions = [...checkedActions];
-    const entityId = dataSource[rowIndex]._id;
-    const entityIndex = findEntityIndex(entityId);
+  // Old-Handle individual action checkbox change
+  // const oldHandleActionCheck = (rowIndex, action, checked) => {
+  //   const newCheckedActions = [...checkedActions];
+  //   const entityId = dataSource[rowIndex]._id;
+  //   const entityIndex = findEntityIndex(entityId);
 
-    const currentAllowedActions = newCheckedActions[entityIndex].allowedActions;
+  //   const currentAllowedActions = newCheckedActions[entityIndex].allowedActions;
 
-    if (checked) {
-      // Add the action to the allowedActions list for this entity
-      newCheckedActions[entityIndex].allowedActions = [
-        ...currentAllowedActions,
-        action,
-      ];
-    } else {
-      // Remove the action from the allowedActions list
-      newCheckedActions[entityIndex].allowedActions =
-        currentAllowedActions.filter((a) => a !== action);
-    }
+  //   if (checked) {
+  //     // Add the action to the allowedActions list for this entity
+  //     newCheckedActions[entityIndex].allowedActions = [
+  //       ...currentAllowedActions,
+  //       action,
+  //     ];
+  //   } else {
+  //     // Remove the action from the allowedActions list
+  //     newCheckedActions[entityIndex].allowedActions =
+  //       currentAllowedActions.filter((a) => a !== action);
+  //   }
 
-    setCheckedActions(newCheckedActions);
-    // console.log("checked", newCheckedActions);
-  };
+  //   setCheckedActions(newCheckedActions);
+  //   // console.log("checked", newCheckedActions);
+  // };
 
   const handleActionCheck = (rowIndex, action, checked) => {
     const newCheckedActions = [...checkedActions];

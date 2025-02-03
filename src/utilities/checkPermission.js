@@ -90,14 +90,15 @@ const matchDynamicRoute = (route) => {
 };
 
 export const hasRoutePermission = (permissions, route) => {
+  console.log("route", route);
   const matchedRoute = matchDynamicRoute(route);
   if (!matchedRoute) return true; // If no permissions are defined for the route
   const routePermission = routePermissions[matchedRoute];
   if (!routePermission || routePermission.length === 0) return true; // No specific permissions required for this route
   // Extract dynamic parameters from the route
-  const dynamicParams = extractDynamicParams(route, matchedRoute);
-  console.log("dynamic params", dynamicParams);
-  return hasPermission(permissions, routePermission, dynamicParams);
+  // const dynamicParams = extractDynamicParams(route, matchedRoute);
+
+  return hasPermission(permissions, routePermission);
 };
 
 // for sidebar resources

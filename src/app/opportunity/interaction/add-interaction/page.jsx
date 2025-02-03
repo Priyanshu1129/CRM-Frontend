@@ -56,6 +56,7 @@ const AddInteraction = () => {
                 name="territory"
                 label="Territory"
                 setInput={setTerritory}
+                onClear={() => setTerritory(null)}
                 // rules={opportunityFormRules.solution}
               />
             </Col>
@@ -64,6 +65,7 @@ const AddInteraction = () => {
                 name="industry"
                 label="Industry"
                 setInput={setIndustry}
+                onClear={() => setIndustry(null)}
                 // rules={opportunityFormRules.solution}
               />
             </Col>

@@ -168,8 +168,12 @@ export const leadFormRules = {
     { required: true, message: "Please write something about the lead." },
   ],
   projectName: [{ required: true, message: "Project Name is required" }],
-  salesTopLine: [{ required: true, message: "Sales Top-Line is required" }],
-  salesOffset: [{ required: true, message: "Offsets are required" }],
+  potentialTopLine: [
+    { required: true, message: "Potential Top-Line is required" },
+  ],
+  potentialOffset: [
+    { required: true, message: "Potential Offset is required" },
+  ],
 };
 
 export const interactionFormRules = {
@@ -180,8 +184,10 @@ export const interactionFormRules = {
   ],
   projectName: [{ required: true, message: "Project Name is required" }],
   leadCustomId: [{ required: true, message: "Lead custom id is required" }],
-  salesTopLine: [{ required: true, message: "Sales Top-Line is required" }],
-  salesOffset: [{ required: true, message: "Offsets are required" }],
+  potentialTopLine: [
+    { required: true, message: "Potential Top-Line is required" },
+  ],
+  potentialOffset: [{ required: true, message: "Offsets are required" }],
 };
 
 export const tenderFormRules = {

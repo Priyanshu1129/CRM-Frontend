@@ -47,10 +47,43 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
     form.setFieldsValue({
       leadCustomId: lead?.customId,
       description: lead?.description,
-      salesTopLine: lead?.salesTopLine,
-      salesOffset: lead?.salesOffset,
+      potentialTopLine: lead?.potentialTopLine,
+      potentialOffset: lead?.potentialOffset,
+      potentialRevenue: lead?.potentialRevenue,
       interactions: lead?.interaction?.interactions,
     });
+  };
+
+  const onClear = (clear) => {
+    switch (clear) {
+      case "client":
+        form.setFieldsValue({
+          client: null,
+          lead: null,
+          leadCustomId: null,
+          description: null,
+          potentialTopLine: null,
+          potentialOffset: null,
+          potentialRevenue: null,
+          interactions: null,
+        });
+        break;
+
+      case "lead":
+        form.setFieldsValue({
+          lead: null,
+          leadCustomId: null,
+          description: null,
+          potentialTopLine: null,
+          potentialOffset: null,
+          potentialRevenue: null,
+          interactions: null,
+        });
+        break;
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -72,6 +105,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
             name="client"
             leadClients={clients}
             leadPage={true}
+            onClear={() => onClear("client")}
             label="Client Name"
             setInput={handleClientChange}
             rules={interactionFormRules.client}
@@ -82,6 +116,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
             name="lead"
             clientAllLeads={clientAllLeads}
             interactionPage={true}
+            onClear={() => onClear("lead")}
             label="Project Name"
             setInput={handleLeadChange}
             rules={interactionFormRules.projectName}
@@ -91,7 +126,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
           <Form.Item
             name="leadCustomId"
             label="Lead"
-            rules={interactionFormRules.leadCustomId}
+            // rules={interactionFormRules.leadCustomId}
           >
             <Input disabled />
           </Form.Item>
@@ -110,7 +145,7 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
           <Form.Item
             name="description"
             label="Brief about the opportunity"
-            rules={interactionFormRules.about}
+            // rules={interactionFormRules.about}
           >
             <Input.TextArea disabled rows={4} />
           </Form.Item>
@@ -146,17 +181,24 @@ export const InteractionForm = ({ clients, loading: clientsLoading }) => {
       <Row gutter={24}>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
-            name="salesTopLine"
-            label="Sales Top-Line"
-            rules={interactionFormRules.salesTopLine}
+            name="potentialTopLine"
+            label="Potential Top-Line"
+            // rules={interactionFormRules.potentialTopLine}
             disabled={true}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
-            name="salesOffset"
-            label="Sales Offset"
-            rules={interactionFormRules.salesOffset}
+            name="potentialOffset"
+            label="Potential Offset"
+            // rules={interactionFormRules.potentialOffset}
+            disabled={true}
+          />
+        </Col>
+        <Col xs={24} sm={12} md={8} lg={6}>
+          <CurrencyAmountInput
+            name="potentialRevenue"
+            label="Potential Revenue"
             disabled={true}
           />
         </Col>

@@ -59,6 +59,7 @@ export const FormHeader = ({
 
   const UploadButton = () => (
     <Button
+      disabled
       icon={<UploadOutlined />}
       type="primary"
       onClick={() => setUploadModal(true)}

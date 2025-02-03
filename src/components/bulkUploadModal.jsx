@@ -22,13 +22,12 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
     fileList.forEach((file) => {
       formData.append("dataFile", file);
     });
-    
+
     setUploading(true);
     fetch(`${serverURL}/upload/${resource}?check=${check}`, {
       method: "POST",
       body: formData,
-      credentials: 'include'
-     
+      credentials: "include",
     })
       .then((res) => res.json())
       .then((res) => {
@@ -44,6 +43,7 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
         setTesting(false);
       });
   };
+
   const props = {
     onRemove: (file) => {
       const index = fileList.indexOf(file);
@@ -66,7 +66,7 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
+          <Button disabled key="back" onClick={handleCancel}>
             Cancel
           </Button>,
           <Button
@@ -96,7 +96,7 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
         ]}
       >
         <Upload {...props}>
-          <Button>Select File</Button>
+          <Button disabled>Select File</Button>
         </Upload>
         {resData?.data?.url &&
           (resData?.type == "backup" ? (

@@ -17,7 +17,6 @@ import { getAllContacts } from "@/redux/actions/contactAction";
 import { getAllTenders } from "@/redux/actions/tenderAction";
 import { getAllOpportunities } from "@/redux/actions/opportunityAction";
 import { salesSubStageActions } from "@/redux/slices/configurationSlice";
-import { getAllLeads } from "@/redux/actions/leadAction";
 
 export const IndustrySelector = ({
   name = "industry",
@@ -25,6 +24,7 @@ export const IndustrySelector = ({
   rules,
   multiple = false,
   setInput,
+  onClear = null,
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ export const IndustrySelector = ({
         mode={multiple ? "multiple" : undefined}
         showSearch
         loading={loading}
-        onClear={() => setInput && setInput(null)}
+        onClear={() => setInput(null)}
         onSelect={handleSelect}
         optionFilterProp="children"
         filterOption={(input, option) =>
@@ -372,6 +372,7 @@ export const TerritorySelector = ({
   label,
   rules,
   multiple = false,
+  onClear = null,
 }) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -407,6 +408,7 @@ export const TerritorySelector = ({
     <Form.Item name={name} label={label} rules={rules}>
       <Select
         allowClear
+        onClear={() => setInput(null)}
         showSearch
         mode={multiple ? "multiple" : undefined}
         loading={loading}
@@ -414,7 +416,6 @@ export const TerritorySelector = ({
         filterOption={(input, option) =>
           option?.children?.toLowerCase().includes(input.toLowerCase())
         }
-        onClear={() => setInput && setInput(null)}
         onSelect={(value) => setInput && setInput(value)}
       >
         {territories?.map(({ label, _id }, idx) => (
@@ -500,6 +501,7 @@ export const ClientSelector = ({
   size = "medium",
   setInput = null,
   disabled = false,
+  onClear = null,
   // onChange,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -550,6 +552,7 @@ export const ClientSelector = ({
         size={size}
         placeholder={name ? `Search client` : ""}
         showSearch
+        onClear={() => setInput(null) && onClear()}
         loading={loading}
         optionFilterProp="children"
         filterOption={(input, option) =>
@@ -777,6 +780,7 @@ export const LeadSelector = ({
   size = "medium",
   setInput = null,
   disabled = false,
+  onClear = null,
   // onChange,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -825,6 +829,7 @@ export const LeadSelector = ({
     >
       <Select
         allowClear
+        onClear={onClear}
         size={size}
         placeholder={name ? `Search Lead` : ""}
         showSearch

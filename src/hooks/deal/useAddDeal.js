@@ -24,14 +24,14 @@ export const useAddOpportunity = ({ form }) => {
         customId: leadData?.customId,
         projectName: leadData?.projectName,
         solution: leadData?.solution?._id,
-        salesTopLine: convertCurrency({
-          value: leadData?.salesTopLine,
-          selectedCurrency: currency?.value,
-        }),
-        offsets: convertCurrency({
-          value: leadData?.salesOffset,
-          selectedCurrency: currency?.value,
-        }),
+        // salesTopLine: convertCurrency({
+        //   value: leadData?.salesTopLine,
+        //   selectedCurrency: currency?.value,
+        // }),
+        // offsets: convertCurrency({
+        //   value: leadData?.salesOffset,
+        //   selectedCurrency: currency?.value,
+        // }),
       };
       form.setFieldsValue(dealInitialValues);
     }

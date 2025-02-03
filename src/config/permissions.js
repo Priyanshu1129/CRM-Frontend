@@ -22,7 +22,7 @@ export const routePermissions = {
   [urls.TENDER_DETAILS]: [{ entity: "TENDER", action: ["READ"] }],
   [urls.TENDER_UPDATE]: [{ entity: "TENDER", action: ["UPDATE"] }], // fake route
 
-  // opportunity routes
+  // deal routes
   [urls.DEAL]: [{ entity: "OPPORTUNITY", action: ["GET ALL", "CREATE"] }],
   [urls.DEAL_ADD]: [{ entity: "OPPORTUNITY", action: ["CREATE"] }],
   [urls.DEAL_DETAILS]: [{ entity: "OPPORTUNITY", action: ["READ"] }],
@@ -46,16 +46,26 @@ export const routePermissions = {
   [urls.REGISTRATION_DETAILS]: [{ entity: "REGISTRATION", action: ["READ"] }],
   [urls.REGISTRATION_UPDATE]: [{ entity: "REGISTRATION", action: ["UPDATE"] }], // fake route
 
-  // client routes
-  [urls.MENTION]: [
-    { entity: "BUSINESS DEVELOPMENT", action: ["GET ALL", "CREATE"] },
+  // mention routes
+  [urls.MENTION]: [{ entity: "BUSINESS DEVELOPMENT", action: ["GET ALL"] }],
+  [urls.MENTION_ADD]: [
+    { entity: "BUSINESS DEVELOPMENT", action: ["CREATE", "GET ALL"] },
   ],
-  [urls.MENTION_ADD]: [{ entity: "BUSINESS DEVELOPMENT", action: ["CREATE"] }],
   [urls.MENTION_DETAILS]: [
     { entity: "BUSINESS DEVELOPMENT", action: ["READ"] },
   ],
-  [urls.MENTION_UPDATE]: [{ entity: "MENTION", action: ["UPDATE"] }], // fake route
+  [urls.MENTION_UPDATE]: [{ entity: "MENTION", action: ["UPDATE"] }],
 
+  // mention routes
+  [urls.LEAD]: [{ entity: "LEAD", action: ["GET ALL"] }],
+  [urls.LEAD_ADD]: [{ entity: "LEAD", action: ["CREATE", "GET ALL"] }],
+  // [urls.LEAD_DETAILS]: [{ entity: "LEAD", action: ["READ"] }],
+  // [urls.LEAD_UPDATE]: [{ entity: "LEAD", action: ["UPDATE"] }],
+
+  // mention routes
+  [urls.INTERACTION_ADD]: [{ entity: "INTERACTION", action: ["CREATE"] }],
+
+  // old system
   // [urls.USER]: [{ entity: "ROLE ENTITY", action: ["GET ALL", "CREATE"] }],
   // [urls.USER_ADD]: [{ entity: "ROLE ENTITY", action: ["CREATE"] }],
   // [urls.USER_DETAILS]: [{ entity: "ROLE ENTITY", action: ["READ"] }],
@@ -138,13 +148,15 @@ export const sideBarPermissions = {
   tender: [{ entity: "TENDER", action: ["GET ALL", "CREATE"] }],
 
   // for opportunity mention tab
-  "opportunity/interaction": [
-    { entity: "INTERACTION", action: ["GET ALL", "CREATE"] },
+  "opportunity/interaction/add-interaction": [
+    { entity: "INTERACTION", action: ["CREATE"] },
   ],
 
-  "opportunity/lead": [{ entity: "LEAD", action: ["GET ALL", "CREATE"] }],
+  "opportunity/lead/add-lead": [
+    { entity: "LEAD", action: ["CREATE", "GET ALL"] },
+  ],
 
-  "opportunity/mention": [
+  "opportunity/mention/add-mention": [
     { entity: "BUSINESS DEVELOPMENT", action: ["GET ALL", "CREATE"] },
   ],
 
@@ -165,6 +177,7 @@ export const sideBarPermissions = {
   admin: [
     { entity: "CONFIGURATION", action: ["GET ALL", "CREATE"] },
     { entity: "ROLE", action: ["GET ALL", "CREATE"] },
+    { entity: "TARGET", action: ["ALLOW"] },
   ],
 
   // for configurations tab

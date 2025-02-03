@@ -5,6 +5,7 @@ import {
   DeleteOutlined,
   EditOutlined,
   ArrowRightOutlined,
+  CheckOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useCheckPermission } from "@/hooks/permissions/useCheckPermission";
@@ -12,6 +13,9 @@ import { useDispatch } from "react-redux";
 import { userActions } from "@/redux/slices/userSlice";
 import { configurationActions } from "@/redux/slices/configurationSlice";
 import { leadActions } from "@/redux/slices/leadSlice";
+import { useSelector } from "react-redux";
+import { fixedRole } from "@/config/fixedRole";
+
 export const LeadsTableActions = ({
   setUpdateConfigData,
   updateConfigData,
@@ -31,11 +35,19 @@ export const LeadsTableActions = ({
   const dispatch = useDispatch();
   const canSeeDetails = useCheckPermission(permissionUrl || showUrl);
   const canDelete = useCheckPermission(deleteUrl);
-
+  const { data } = useSelector((state) => state.auth.authDetails);
   const handleConvertIntoLead = () => {
     dispatch(leadActions.setConvertLead(record));
     router.push("/deal/add-deal");
   };
+
+  const canConvertLead = () => {
+    if (Object.values(fixedRole).includes(data?.role?.name)) return true;
+    return false;
+  };
+  const convertAction = canConvertLead();
+
+  // const anyAction = convertAction || canSeeDetails || canDelete;
 
   return (
     <>
@@ -100,11 +112,13 @@ export const LeadsTableActions = ({
           size="medium"
           type="primary"
           onClick={handleConvertIntoLead}
-          icon={<ArrowRightOutlined />}
+          icon={record?.converted ? <CheckOutlined /> : <ArrowRightOutlined />}
           iconPosition="end"
-          disabled={record?.converted}
+          disabled={!convertAction || record?.converted}
         >
-          Convert into Deal
+          {record?.converted
+            ? "Already Converted Into Deal"
+            : "Convert Into Deal"}
         </Button>
       </Space>
     </>

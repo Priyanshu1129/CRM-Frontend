@@ -108,16 +108,16 @@ export const CreateDeal = ({ clientLoading, clients }) => {
       <Row gutter={24}>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
-            name="salesTopLine"
-            label="Sales Top-Line"
-            rules={leadFormRules.salesTopLine}
+            name="potentialTopLine"
+            label="Potential Top-Line"
+            rules={leadFormRules.potentialTopLine}
           />
         </Col>
         <Col xs={24} sm={12} md={8} lg={6}>
           <CurrencyAmountInput
-            name="salesOffset"
-            label="Sales Offset"
-            rules={leadFormRules.salesOffset}
+            name="potentialOffset"
+            label="Potential Offset"
+            rules={leadFormRules.potentialOffset}
           />
         </Col>
       </Row>

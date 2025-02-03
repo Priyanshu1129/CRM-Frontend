@@ -34,20 +34,20 @@ export const useAddLead = () => {
   }, [status, error, dispatch]);
 
   const onFinish = (values) => {
-    const salesTopLineInUSD = convertCurrency({
-      value: values?.salesTopLine,
+    const potentialTopLineInUSD = convertCurrency({
+      value: values?.potentialTopLine,
       selectedCurrency: currency?.value,
       toUSD: true,
     });
-    const offsetsInUSD = convertCurrency({
-      value: values?.salesOffset,
+    const potentialOffsetInUSD = convertCurrency({
+      value: values?.potentialOffset,
       selectedCurrency: currency?.value,
       toUSD: true,
     });
     let newValues = {
       ...values,
-      salesTopLine: salesTopLineInUSD,
-      salesOffset: offsetsInUSD,
+      potentialTopLine: potentialTopLineInUSD,
+      potentialOffset: potentialOffsetInUSD,
       // entryDate: new Date().toISOString(),
     };
     dispatch(createLead(newValues));

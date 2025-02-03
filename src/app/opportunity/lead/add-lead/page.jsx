@@ -68,6 +68,7 @@ const AddLead = () => {
                 name="territory"
                 label="Territory"
                 setInput={setTerritory}
+                onClear={() => setTerritory(null)}
                 // rules={opportunityFormRules.solution}
               />
             </Col>
@@ -76,6 +77,7 @@ const AddLead = () => {
                 name="industry"
                 label="Industry"
                 setInput={setIndustry}
+                onClear={() => setIndustry(null)}
                 // rules={opportunityFormRules.solution}
               />
             </Col>
