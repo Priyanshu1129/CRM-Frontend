@@ -18,6 +18,12 @@ import { opportunityFormRules, roleFormRules } from "@/utilities/formValidationR
 import { useCreateSubSolution } from "@/hooks/adminPanel/configurations/sub-solution/useCreateSubSolution";
 import { useCreateSalesSubStage } from "@/hooks/adminPanel/configurations/sales-sub-stage/useCreateSalesSubStage";
 import { SalesStageSelector } from "@/components";
+import { useCreateClassification } from "@/hooks/adminPanel/configurations/client/classification/useCreateClassification";
+import { useIncorporationTypes } from "@/hooks/adminPanel/configurations/client/incorporationType/useIncorporationTypes";
+import { useCreateIncorporationType } from "@/hooks/adminPanel/configurations/client/incorporationType/useCreateIncorporationType";
+import { useCreateArcheType } from "@/hooks/adminPanel/configurations/contact/archType/useCreateArcheType";
+import { useCreateRelationshipDegree } from "@/hooks/adminPanel/configurations/contact/relationshipDegree/useCreateRelationshipDegree";
+import { useCreateRelationshipStatus } from "@/hooks/adminPanel/configurations/client/relationshipStatus/useCreateRelationshipStatus";
 
 const CreateConfigModal = ({
   showCreateConfigPopup,
@@ -34,7 +40,12 @@ const CreateConfigModal = ({
   const solutionCreate = useCreateSolution({ setShowCreateConfigPopup });
   const subSolutionCreate = useCreateSubSolution({ setShowCreateConfigPopup });
   const salesSubStageCreate = useCreateSalesSubStage({ setShowCreateConfigPopup });
-
+  const classificationCreate = useCreateClassification({ setShowCreateConfigPopup });
+  const incorporationTypeCreate = useCreateIncorporationType({ setShowCreateConfigPopup });
+  const relationshipStatusCreate = useCreateRelationshipStatus({ setShowCreateConfigPopup });
+  const archeTypeCreate = useCreateArcheType({ setShowCreateConfigPopup });
+  const relationshipDegreeCreate = useCreateRelationshipDegree({ setShowCreateConfigPopup });
+ 
   // Select the correct loading and onFinish based on configType
   let loading, onFinish;
   switch (configType) {
@@ -61,6 +72,28 @@ const CreateConfigModal = ({
     case "sales-sub-stage":
       loading = salesSubStageCreate.loading;
       onFinish = salesSubStageCreate.onFinish;
+      break;
+    // client 
+    case "classification":
+      loading = classificationCreate.loading;
+      onFinish = classificationCreate.onFinish;
+      break;
+    case "incorporation-type":
+      loading = incorporationTypeCreate.loading;
+      onFinish = incorporationTypeCreate.onFinish;
+      break;
+    case "relationship-status":
+      loading = relationshipStatusCreate.loading;
+      onFinish = relationshipStatusCreate.onFinish;
+      break;
+    //contact  
+    case "arche-type":
+      loading = archeTypeCreate.loading;
+      onFinish = archeTypeCreate.onFinish;
+      break;
+    case "relationship-degree":
+      loading = relationshipDegreeCreate.loading;
+      onFinish = relationshipDegreeCreate.onFinish;
       break;
     default:
       loading = false;

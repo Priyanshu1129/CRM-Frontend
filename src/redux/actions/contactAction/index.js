@@ -1,3 +1,3 @@
 export * from "./contact";
-export * from "./configuration/archeType";
-export * from "./configuration/relationshipDegree";
+export * from "../configurationAction/contact/archeType";
+export * from "../configurationAction/contact/relationshipDegree";

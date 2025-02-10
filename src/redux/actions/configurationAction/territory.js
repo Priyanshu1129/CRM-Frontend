@@ -135,6 +135,12 @@ export const deleteTerritory = (territoryId, confirm = 'true', undo = 'false') =
 
     console.log("delete-territory-res-data", data);
     dispatch(territoryActions.deleteTerritorySuccess(data));
+    dispatch(
+      territoryActions.updateTerritoryList({
+        type: "delete",
+        payload: data?.data?.territory,
+      })
+    );
   } catch (error) {
     console.log("delete-territory-error", error);
     dispatch(

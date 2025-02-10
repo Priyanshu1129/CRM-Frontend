@@ -314,7 +314,7 @@ const AddContact = ({}) => {
       </Space>
 
       {/* Bulk Upload Modal */}
-      <BulkUploadModal open={uploadModal} setOpen={setUploadModal} />
+      <BulkUploadModal open={uploadModal} setOpen={setUploadModal} resource={'contact'}/>
     </div>
   );
 };

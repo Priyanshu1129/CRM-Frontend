@@ -32,7 +32,7 @@ const relationshipStatusSlice = createSlice({
   name: "relationshipStatus",
   initialState: initialRelationshipStatusState,
   reducers: {
-    getRelationshipStatusRequest: (state, action) => {
+    getRelationshipStatusRequest: (state) => {
       state.getRelationshipStatus.status = "pending";
     },
     getRelationshipStatusSuccess: (state, action) => {
@@ -43,7 +43,7 @@ const relationshipStatusSlice = createSlice({
       state.getRelationshipStatus.status = "failed";
       state.getRelationshipStatus.error = action.payload;
     },
-    getAllRelationshipStatusRequest: (state, action) => {
+    getAllRelationshipStatusRequest: (state) => {
       state.getAllRelationshipStatus.status = "pending";
     },
     getAllRelationshipStatusSuccess: (state, action) => {
@@ -54,7 +54,7 @@ const relationshipStatusSlice = createSlice({
       state.getAllRelationshipStatus.status = "failed";
       state.getAllRelationshipStatus.error = action.payload;
     },
-    createRelationshipStatusRequest: (state, action) => {
+    createRelationshipStatusRequest: (state) => {
       state.createRelationshipStatus.status = "pending";
     },
     createRelationshipStatusSuccess: (state, action) => {
@@ -63,10 +63,9 @@ const relationshipStatusSlice = createSlice({
     },
     createRelationshipStatusFailure: (state, action) => {
       state.createRelationshipStatus.status = "failed";
-      state.createRelationshipStatus.data = null;
       state.createRelationshipStatus.error = action.payload;
     },
-    updateRelationshipStatusRequest: (state, action) => {
+    updateRelationshipStatusRequest: (state) => {
       state.updateRelationshipStatus.status = "pending";
     },
     updateRelationshipStatusSuccess: (state, action) => {
@@ -91,7 +90,7 @@ const relationshipStatusSlice = createSlice({
     clearGetRelationshipStatusStatus: (state) => {
       state.getRelationshipStatus.status = "idle";
     },
-    clearGetRelationshipStatusData: () => {
+    clearGetRelationshipStatusData: (state) => {
       state.getRelationshipStatus.data = null;
     },
     clearGetRelationshipStatusError: (state) => {
@@ -100,7 +99,7 @@ const relationshipStatusSlice = createSlice({
     clearGetAllRelationshipStatusStatus: (state) => {
       state.getAllRelationshipStatus.status = "idle";
     },
-    clearGetAllRelationshipStatusData: () => {
+    clearGetAllRelationshipStatusData: (state) => {
       state.getAllRelationshipStatus.data = null;
     },
     clearGetAllRelationshipStatusError: (state) => {
@@ -109,7 +108,7 @@ const relationshipStatusSlice = createSlice({
     clearCreateRelationshipStatusStatus: (state) => {
       state.createRelationshipStatus.status = "idle";
     },
-    clearCreateRelationshipStatusData: () => {
+    clearCreateRelationshipStatusData: (state) => {
       state.createRelationshipStatus.data = null;
     },
     clearCreateRelationshipStatusError: (state) => {
@@ -118,7 +117,7 @@ const relationshipStatusSlice = createSlice({
     clearUpdateRelationshipStatusStatus: (state) => {
       state.updateRelationshipStatus.status = "idle";
     },
-    clearUpdateRelationshipStatusData: () => {
+    clearUpdateRelationshipStatusData: (state) => {
       state.updateRelationshipStatus.data = null;
     },
     clearUpdateRelationshipStatusError: (state) => {
@@ -127,11 +126,48 @@ const relationshipStatusSlice = createSlice({
     clearDeleteRelationshipStatusStatus: (state) => {
       state.deleteRelationshipStatus.status = "idle";
     },
-    clearDeleteRelationshipStatusData: () => {
+    clearDeleteRelationshipStatusData: (state) => {
       state.deleteRelationshipStatus.data = null;
     },
     clearDeleteRelationshipStatusError: (state) => {
       state.deleteRelationshipStatus.error = null;
+    },
+    updateRelationshipStatusList: (state, action) => {
+      const { type, payload } = action.payload;
+
+      if (!Array.isArray(state.getAllRelationshipStatus?.data?.data)) {
+        state.getAllRelationshipStatus.data = {
+          ...state.getAllRelationshipStatus.data,
+          data: [],
+        };
+      }
+
+      switch (type) {
+        case "add": {
+          state.getAllRelationshipStatus.data.data = [
+            payload,
+            ...state.getAllRelationshipStatus.data.data,
+          ];
+          break;
+        }
+        case "update": {
+          const index = state.getAllRelationshipStatus.data.data.findIndex(
+            (status) => status._id.toString() === payload?._id.toString()
+          );
+          if (index !== -1) {
+            state.getAllRelationshipStatus.data.data[index] = payload;
+          }
+          break;
+        }
+        case "delete": {
+          state.getAllRelationshipStatus.data.data = state.getAllRelationshipStatus.data.data.filter(
+            (status) => status._id.toString() !== payload._id.toString()
+          );
+          break;
+        }
+        default:
+          console.warn(`Unhandled type: ${type}`);
+      }
     },
   },
 });

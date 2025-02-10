@@ -137,6 +137,12 @@ export const deleteSolution = (solutionId, confirm = 'true', undo = 'false') => 
 
     console.log("delete-solution-res-data", response);
     dispatch(solutionActions.deleteSolutionSuccess(response));
+    dispatch(
+      solutionActions.updateSolutionList({
+        type: "delete",
+        payload: response?.data?.solution,
+      })
+    );
   } catch (error) {
     console.log("delete-solution-error", error);
     // Error message is handled by axiosRequest, so just pass it to the failure action

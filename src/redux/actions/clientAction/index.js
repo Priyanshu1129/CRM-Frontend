@@ -1,4 +1,4 @@
 export * from "./client";
-export * from "./configuration/classification";
-export * from "./configuration/incorporationType";
-export * from "./configuration/relationshipStatus";
+// export * from "./client/classification";
+// export * from "./client/incorporationType";
+// export * from "./client/relationshipStatus";

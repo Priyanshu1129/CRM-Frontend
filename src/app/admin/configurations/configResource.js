@@ -29,6 +29,28 @@ export const configResources = [
     key: "sales-sub-stage",
     title: "Sales Sub Stage",
   },
+  //Client
+  {
+    key: "classification",
+    title: "Classification",
+  },
+  {
+    key: "incorporation-type",
+    title: "Incorporation Type",
+  },
+  {
+    key: "relationship-status",
+    title: "Relationship Status",
+  },
+  //Contact
+  {
+    key: "arche-type",
+    title: "Archetype",
+  },
+  {
+    key: "relationship-degree",
+    title: "Relationship Degree",
+  },
 ];
 
 export const getColumns = ({ counts }) => {

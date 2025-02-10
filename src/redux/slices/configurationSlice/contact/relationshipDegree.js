@@ -32,7 +32,7 @@ const relationshipDegreeSlice = createSlice({
   name: "relationshipDegree",
   initialState: initialRelationshipDegreeState,
   reducers: {
-    getRelationshipDegreeRequest: (state, action) => {
+    getRelationshipDegreeRequest: (state) => {
       state.getRelationshipDegree.status = "pending";
     },
     getRelationshipDegreeSuccess: (state, action) => {
@@ -43,7 +43,7 @@ const relationshipDegreeSlice = createSlice({
       state.getRelationshipDegree.status = "failed";
       state.getRelationshipDegree.error = action.payload;
     },
-    getAllRelationshipDegreesRequest: (state, action) => {
+    getAllRelationshipDegreesRequest: (state) => {
       state.getAllRelationshipDegrees.status = "pending";
     },
     getAllRelationshipDegreesSuccess: (state, action) => {
@@ -54,7 +54,7 @@ const relationshipDegreeSlice = createSlice({
       state.getAllRelationshipDegrees.status = "failed";
       state.getAllRelationshipDegrees.error = action.payload;
     },
-    createRelationshipDegreeRequest: (state, action) => {
+    createRelationshipDegreeRequest: (state) => {
       state.createRelationshipDegree.status = "pending";
     },
     createRelationshipDegreeSuccess: (state, action) => {
@@ -63,10 +63,9 @@ const relationshipDegreeSlice = createSlice({
     },
     createRelationshipDegreeFailure: (state, action) => {
       state.createRelationshipDegree.status = "failed";
-      state.createRelationshipDegree.data = null;
       state.createRelationshipDegree.error = action.payload;
     },
-    updateRelationshipDegreeRequest: (state, action) => {
+    updateRelationshipDegreeRequest: (state) => {
       state.updateRelationshipDegree.status = "pending";
     },
     updateRelationshipDegreeSuccess: (state, action) => {
@@ -91,7 +90,7 @@ const relationshipDegreeSlice = createSlice({
     clearGetRelationshipDegreeStatus: (state) => {
       state.getRelationshipDegree.status = "idle";
     },
-    clearGetRelationshipDegreeData: () => {
+    clearGetRelationshipDegreeData: (state) => {
       state.getRelationshipDegree.data = null;
     },
     clearGetRelationshipDegreeError: (state) => {
@@ -100,7 +99,7 @@ const relationshipDegreeSlice = createSlice({
     clearGetAllRelationshipDegreesStatus: (state) => {
       state.getAllRelationshipDegrees.status = "idle";
     },
-    clearGetAllRelationshipDegreesData: () => {
+    clearGetAllRelationshipDegreesData: (state) => {
       state.getAllRelationshipDegrees.data = null;
     },
     clearGetAllRelationshipDegreesError: (state) => {
@@ -109,7 +108,7 @@ const relationshipDegreeSlice = createSlice({
     clearCreateRelationshipDegreeStatus: (state) => {
       state.createRelationshipDegree.status = "idle";
     },
-    clearCreateRelationshipDegreeData: () => {
+    clearCreateRelationshipDegreeData: (state) => {
       state.createRelationshipDegree.data = null;
     },
     clearCreateRelationshipDegreeError: (state) => {
@@ -118,7 +117,7 @@ const relationshipDegreeSlice = createSlice({
     clearUpdateRelationshipDegreeStatus: (state) => {
       state.updateRelationshipDegree.status = "idle";
     },
-    clearUpdateRelationshipDegreeData: () => {
+    clearUpdateRelationshipDegreeData: (state) => {
       state.updateRelationshipDegree.data = null;
     },
     clearUpdateRelationshipDegreeError: (state) => {
@@ -127,11 +126,48 @@ const relationshipDegreeSlice = createSlice({
     clearDeleteRelationshipDegreeStatus: (state) => {
       state.deleteRelationshipDegree.status = "idle";
     },
-    clearDeleteRelationshipDegreeData: () => {
+    clearDeleteRelationshipDegreeData: (state) => {
       state.deleteRelationshipDegree.data = null;
     },
     clearDeleteRelationshipDegreeError: (state) => {
       state.deleteRelationshipDegree.error = null;
+    },
+    updateRelationshipDegreeList: (state, action) => {
+      const { type, payload } = action.payload;
+
+      if (!Array.isArray(state.getAllRelationshipDegrees?.data?.data)) {
+        state.getAllRelationshipDegrees.data = {
+          ...state.getAllRelationshipDegrees.data,
+          data: [],
+        };
+      }
+
+      switch (type) {
+        case "add": {
+          state.getAllRelationshipDegrees.data.data = [
+            payload,
+            ...state.getAllRelationshipDegrees.data.data,
+          ];
+          break;
+        }
+        case "update": {
+          const index = state.getAllRelationshipDegrees.data.data.findIndex(
+            (degree) => degree._id.toString() === payload?._id.toString()
+          );
+          if (index !== -1) {
+            state.getAllRelationshipDegrees.data.data[index] = payload;
+          }
+          break;
+        }
+        case "delete": {
+          state.getAllRelationshipDegrees.data.data = state.getAllRelationshipDegrees.data.data.filter(
+            (degree) => degree._id.toString() !== payload._id.toString()
+          );
+          break;
+        }
+        default:
+          console.warn(`Unhandled type: ${type}`);
+      }
     },
   },
 });

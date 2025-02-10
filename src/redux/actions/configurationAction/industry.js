@@ -139,8 +139,14 @@ export const deleteIndustry = (industryId, confirm = 'true', undo = 'false') => 
       `${route}/${industryId}?confirm=${confirm}&undo=${undo}`,
     );
 
-    console.log("delete-industry-res-data", response);
+    console.log("delete-industry-res-data", response);  
     dispatch(industryActions.deleteIndustrySuccess(response));
+    dispatch(
+      industryActions.updateIndustryList({
+        type: "delete",
+        payload: response?.data?.industry,
+      })
+    );
   } catch (error) {
     console.log("delete-industry-error", error);
     // Error message is handled by axiosRequest, so just pass it to the failure action

@@ -3,16 +3,16 @@ import { Button, Modal, message, Upload, Space } from "antd";
 import { serverURL } from "@/config/config";
 import Link from "next/link";
 
-export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
+export const BulkUploadModal = ({ open, setOpen, resource }) => {
   const [fileList, setFileList] = useState([]);
   const [testing, setTesting] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [resData, setResData] = useState(null);
   const handleOk = () => {
-    setUploadModal(false);
+    setOpen(false);
   };
   const handleCancel = () => {
-    setUploadModal(false);
+    setOpen(false);
   };
 
   const handleUpload = (check) => {
@@ -62,11 +62,11 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
     <>
       <Modal
         title="Bulk Upload"
-        open={uploadModal}
+        open={open}
         onOk={handleOk}
         onCancel={handleCancel}
         footer={[
-          <Button disabled key="back" onClick={handleCancel}>
+          <Button  key="back" onClick={handleCancel}>
             Cancel
           </Button>,
           <Button
@@ -96,7 +96,7 @@ export const BulkUploadModal = ({ uploadModal, setUploadModal, resource }) => {
         ]}
       >
         <Upload {...props}>
-          <Button disabled>Select File</Button>
+          <Button >Select File</Button>
         </Upload>
         {resData?.data?.url &&
           (resData?.type == "backup" ? (

@@ -71,12 +71,19 @@ export const createUser = (userData) => async (dispatch) => {
     dispatch(userActions.createUserRequest());
 
     // Make the API call using the axiosRequest helper
+    const formData = new FormData();
+    Object.keys(userData).forEach((key) => {
+      formData.append(key, userData[key]);
+    });
+    console.log("user data : ", userData)
+    console.log("form data : ", formData)
     const response = await axiosRequest(
       dispatch,
       "POST", // HTTP method for POST request
       `${route}/`, // Endpoint for creating a new user
-      userData, // Data to be sent in the request body
-      null // No query parameters
+      formData, // Data to be sent in the request body
+      null, // No query parameters
+      { "Content-Type": "multipart/form-data" }
     );
 
     console.log("create-user-res-data", response);
@@ -100,12 +107,18 @@ export const updateUser = (userData, userId) => async (dispatch) => {
     dispatch(userActions.updateUserRequest());
 
     // Make the API call using the axiosRequest helper
+    const formData = new FormData();
+    Object.keys(userData).forEach((key) => {
+      formData.append(key, userData[key]);
+    });
+
     const response = await axiosRequest(
       dispatch,
-      "PUT", // HTTP method for PUT request
-      `${route}/${userId}`, // Endpoint for updating the user by ID
-      userData, // Data to be sent in the request body
-      null // No query parameters
+      "PUT",
+      `${route}/${userId}`,
+      formData, // Send formData instead of JSON
+      null, // No query params
+      { "Content-Type": "multipart/form-data" } // Set headers
     );
 
     console.log("update-user-res-data", response.data);
@@ -125,29 +138,31 @@ export const updateUser = (userData, userId) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (userId, confirm = 'true' ,undo='false') => async (dispatch) => {
-  try {
-    console.log("delete-userData", userId);
-    dispatch(userActions.deleteUserRequest());
+export const deleteUser =
+  (userId, confirm = "true", undo = "false") =>
+  async (dispatch) => {
+    try {
+      console.log("delete-userData", userId);
+      dispatch(userActions.deleteUserRequest());
 
-    // Make the API call using the axiosRequest helper
-    const response = await axiosRequest(
-      dispatch,
-      "DELETE", // HTTP method for DELETE request
-      `${route}/${userId}?undo=${undo}&confirm=${confirm}` // Endpoint for deleting a user by ID
-    );
+      // Make the API call using the axiosRequest helper
+      const response = await axiosRequest(
+        dispatch,
+        "DELETE", // HTTP method for DELETE request
+        `${route}/${userId}?undo=${undo}&confirm=${confirm}` // Endpoint for deleting a user by ID
+      );
 
-    console.log("delete-user-res-data", response.data);
-    dispatch(userActions.deleteUserSuccess(response.data));
-    dispatch(
-      userActions.updateUserList({
-        type: "delete",
-        payload: response.data.user,
-      })
-    );
-  } catch (error) {
-    dispatch(
-      userActions.deleteUserFailure(error.message || "An error occurred")
-    );
-  }
-};
+      console.log("delete-user-res-data", response.data);
+      dispatch(userActions.deleteUserSuccess(response.data));
+      dispatch(
+        userActions.updateUserList({
+          type: "delete",
+          payload: response.data.user,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        userActions.deleteUserFailure(error.message || "An error occurred")
+      );
+    }
+  };

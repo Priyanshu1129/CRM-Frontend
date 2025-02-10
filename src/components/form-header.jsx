@@ -59,10 +59,12 @@ export const FormHeader = ({
 
   const UploadButton = () => (
     <Button
-      disabled
       icon={<UploadOutlined />}
       type="primary"
-      onClick={() => setUploadModal(true)}
+      onClick={() => {
+        console.log('bulk upload cliked :')
+        setUploadModal(true)
+      }}
       style={{
         marginTop: screens.xs ? "1.6rem" : "0rem",
       }}

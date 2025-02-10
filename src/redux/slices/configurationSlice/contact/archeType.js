@@ -32,7 +32,7 @@ const archeTypeSlice = createSlice({
   name: "archeType",
   initialState: initialArcheTypeState,
   reducers: {
-    getArcheTypeRequest: (state, action) => {
+    getArcheTypeRequest: (state) => {
       state.getArcheType.status = "pending";
     },
     getArcheTypeSuccess: (state, action) => {
@@ -43,7 +43,7 @@ const archeTypeSlice = createSlice({
       state.getArcheType.status = "failed";
       state.getArcheType.error = action.payload;
     },
-    getAllArcheTypesRequest: (state, action) => {
+    getAllArcheTypesRequest: (state) => {
       state.getAllArcheTypes.status = "pending";
     },
     getAllArcheTypesSuccess: (state, action) => {
@@ -54,7 +54,7 @@ const archeTypeSlice = createSlice({
       state.getAllArcheTypes.status = "failed";
       state.getAllArcheTypes.error = action.payload;
     },
-    createArcheTypeRequest: (state, action) => {
+    createArcheTypeRequest: (state) => {
       state.createArcheType.status = "pending";
     },
     createArcheTypeSuccess: (state, action) => {
@@ -63,10 +63,9 @@ const archeTypeSlice = createSlice({
     },
     createArcheTypeFailure: (state, action) => {
       state.createArcheType.status = "failed";
-      state.createArcheType.data = null;
       state.createArcheType.error = action.payload;
     },
-    updateArcheTypeRequest: (state, action) => {
+    updateArcheTypeRequest: (state) => {
       state.updateArcheType.status = "pending";
     },
     updateArcheTypeSuccess: (state, action) => {
@@ -91,7 +90,7 @@ const archeTypeSlice = createSlice({
     clearGetArcheTypeStatus: (state) => {
       state.getArcheType.status = "idle";
     },
-    clearGetArcheTypeData: () => {
+    clearGetArcheTypeData: (state) => {
       state.getArcheType.data = null;
     },
     clearGetArcheTypeError: (state) => {
@@ -100,7 +99,7 @@ const archeTypeSlice = createSlice({
     clearGetAllArcheTypesStatus: (state) => {
       state.getAllArcheTypes.status = "idle";
     },
-    clearGetAllArcheTypesData: () => {
+    clearGetAllArcheTypesData: (state) => {
       state.getAllArcheTypes.data = null;
     },
     clearGetAllArcheTypesError: (state) => {
@@ -109,7 +108,7 @@ const archeTypeSlice = createSlice({
     clearCreateArcheTypeStatus: (state) => {
       state.createArcheType.status = "idle";
     },
-    clearCreateArcheTypeData: () => {
+    clearCreateArcheTypeData: (state) => {
       state.createArcheType.data = null;
     },
     clearCreateArcheTypeError: (state) => {
@@ -118,7 +117,7 @@ const archeTypeSlice = createSlice({
     clearUpdateArcheTypeStatus: (state) => {
       state.updateArcheType.status = "idle";
     },
-    clearUpdateArcheTypeData: () => {
+    clearUpdateArcheTypeData: (state) => {
       state.updateArcheType.data = null;
     },
     clearUpdateArcheTypeError: (state) => {
@@ -127,11 +126,48 @@ const archeTypeSlice = createSlice({
     clearDeleteArcheTypeStatus: (state) => {
       state.deleteArcheType.status = "idle";
     },
-    clearDeleteArcheTypeData: () => {
+    clearDeleteArcheTypeData: (state) => {
       state.deleteArcheType.data = null;
     },
     clearDeleteArcheTypeError: (state) => {
       state.deleteArcheType.error = null;
+    },
+    updateArcheTypeList: (state, action) => {
+      const { type, payload } = action.payload;
+
+      if (!Array.isArray(state.getAllArcheTypes?.data?.data)) {
+        state.getAllArcheTypes.data = {
+          ...state.getAllArcheTypes.data,
+          data: [],
+        };
+      }
+
+      switch (type) {
+        case "add": {
+          state.getAllArcheTypes.data.data = [
+            payload,
+            ...state.getAllArcheTypes.data.data,
+          ];
+          break;
+        }
+        case "update": {
+          const index = state.getAllArcheTypes.data.data.findIndex(
+            (archeType) => archeType._id.toString() === payload?._id.toString()
+          );
+          if (index !== -1) {
+            state.getAllArcheTypes.data.data[index] = payload;
+          }
+          break;
+        }
+        case "delete": {
+          state.getAllArcheTypes.data.data = state.getAllArcheTypes.data.data.filter(
+            (archeType) => archeType._id.toString() !== payload._id.toString()
+          );
+          break;
+        }
+        default:
+          console.warn(`Unhandled type: ${type}`);
+      }
     },
   },
 });

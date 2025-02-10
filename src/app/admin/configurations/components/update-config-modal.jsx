@@ -20,6 +20,11 @@ import { useUpdateSubSolution } from "@/hooks/adminPanel/configurations/sub-solu
 import { useUpdateSalesStage } from "@/hooks/adminPanel/configurations/sales-stage/useUpdateSalesStage";
 import { useUpdateSalesSubStage } from "@/hooks/adminPanel/configurations/sales-sub-stage/useUpdateSalesSubStage";
 import { SalesStageSelector } from "@/components";
+import { useUpdateClassification } from "@/hooks/adminPanel/configurations/client/classification/useUpdateClassification";
+import { useUpdateIncorporationType } from "@/hooks/adminPanel/configurations/client/incorporationType/useUpdateIncorporationType";
+import { useUpdateArcheType } from "@/hooks/adminPanel/configurations/contact/archType/useUpdateArcheType";
+import { useUpdateRelationshipDegree } from "@/hooks/adminPanel/configurations/contact/relationshipDegree/useUpdateRelationshipDegree";
+import { useUpdateRelationshipStatus } from "@/hooks/adminPanel/configurations/client/relationshipStatus/useUpdateRelationshipStatus";
 
 const UpdateConfigModal = ({
   configType,
@@ -27,6 +32,7 @@ const UpdateConfigModal = ({
   showUpdateConfigPopup,
   setShowUpdateConfigPopup,
 }) => {
+  console.log("update config data :", updateConfigData);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("");
 
@@ -56,6 +62,29 @@ const UpdateConfigModal = ({
     updateConfigData,
   });
   const salesSubStageUpdate = useUpdateSalesSubStage({
+    setShowUpdateConfigPopup,
+    updateConfigData,
+  });
+  //client
+  const classificationUpdate = useUpdateClassification({
+    setShowUpdateConfigPopup,
+    updateConfigData,
+  });
+  const incorporationTypeUpdate = useUpdateIncorporationType({
+    setShowUpdateConfigPopup,
+    updateConfigData,
+  });
+  const relationshipStatusUpdate = useUpdateRelationshipStatus({
+    setShowUpdateConfigPopup,
+    updateConfigData,
+  });
+
+  //contact
+  const archeTypeUpdate = useUpdateArcheType({
+    setShowUpdateConfigPopup,
+    updateConfigData,
+  });
+  const relationshipDegreeUpdate = useUpdateRelationshipDegree({
     setShowUpdateConfigPopup,
     updateConfigData,
   });
@@ -91,6 +120,32 @@ const UpdateConfigModal = ({
       loading = salesSubStageUpdate.loading;
       onFinish = salesSubStageUpdate.onFinish;
       break;
+
+    //client
+    case "classification":
+      loading = classificationUpdate.loading;
+      onFinish = classificationUpdate.onFinish;
+      break;
+    case "incorporation-type":
+      loading = incorporationTypeUpdate.loading;
+      onFinish = incorporationTypeUpdate.onFinish;
+      break;
+    case "relationship-status":
+      loading = relationshipStatusUpdate.loading;
+      onFinish = relationshipStatusUpdate.onFinish;
+      break;
+
+    //contact
+    case "arche-type":
+      loading = archeTypeUpdate.loading;
+      onFinish = archeTypeUpdate.onFinish;
+      break;
+
+    case "relationship-degree":
+      loading = relationshipDegreeUpdate.loading;
+      onFinish = relationshipDegreeUpdate.onFinish;
+      break;
+
     default:
       loading = false;
       onFinish = () => {}; // No-op function if configType is invalid

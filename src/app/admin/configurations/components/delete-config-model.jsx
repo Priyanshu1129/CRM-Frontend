@@ -12,6 +12,11 @@ import { useDeleteIndustry } from "@/hooks/adminPanel/configurations/industry/us
 import { useDeleteTerritory } from "@/hooks/adminPanel/configurations/territory/useDeleteTerritroy";
 import { useDeleteSubIndustry } from "@/hooks/adminPanel/configurations/sub-industry/useDeleteSubIndustry";
 import { useDeleteSubSolution } from "@/hooks/adminPanel/configurations/sub-solution/useDeleteSubSolution";
+import { useDeleteClassification } from "@/hooks/adminPanel/configurations/client/classification/useDeleteClassification";
+import { useDeleteIncorporationType } from "@/hooks/adminPanel/configurations/client/incorporationType/useDeleteIncorporationType";
+import { useDeleteArcheType } from "@/hooks/adminPanel/configurations/contact/archType/useDeleteArcheType";
+import { useDeleteRelationshipDegree } from "@/hooks/adminPanel/configurations/contact/relationshipDegree/useDeleteRelationshipDegree";
+import { useDeleteRelationshipStatus } from "@/hooks/adminPanel/configurations/client/relationshipStatus/useDeleteRelationshipStatus";
 
 const { Text } = Typography;
 
@@ -27,7 +32,15 @@ const DeleteConfigModal = () => {
   const { loading: l3, handleDeleteIndustry } = useDeleteIndustry();
   const { loading: l4, handleDeleteSubIndustry } = useDeleteSubIndustry();
   const { loading: l5, handleDeleteTerritory } = useDeleteTerritory();
-  const loading = l1 || l2 || l3 || l4 || l5;
+  const { loading: l6, handleDeleteClassification } = useDeleteClassification();
+  const { loading: l7, handleDeleteIncorporationType } =
+    useDeleteIncorporationType();
+  const { loading: l8, handleDeleteArcheType } = useDeleteArcheType();
+  const { loading: l9, handleDeleteRelationshipDegree } =
+    useDeleteRelationshipDegree();
+  const { loading: l10, handleDeleteRelationshipStatus } =
+    useDeleteRelationshipStatus();
+  const loading = l1 || l2 || l3 || l4 || l5 || l6 || l7 || l8 || l9 || l10;
 
   const handleDelete = (configId) => {
     switch (configType) {
@@ -49,6 +62,28 @@ const DeleteConfigModal = () => {
 
       case "territory":
         handleDeleteTerritory(configId, "true", "false");
+        break;
+
+      //client
+      case "classification":
+        handleDeleteClassification(configId, "true", "false");
+        break;
+
+      case "incorporation-type":
+        handleDeleteIncorporationType(configId, "true", "false");
+        break;
+
+      case "relationship-status":
+        handleDeleteRelationshipStatus(configId, "true", "false");
+        break;
+
+      //contact
+      case "arche-type":
+        handleDeleteArcheType(configId, "true", "false");
+        break;
+
+      case "relationship-degree":
+        handleDeleteRelationshipDegree(configId, "true", "false");
         break;
     }
   };

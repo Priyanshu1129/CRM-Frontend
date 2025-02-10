@@ -93,12 +93,19 @@ export const createClient = (clientData) => async (dispatch) => {
     console.log("create-client-req-data", clientData);
     dispatch(clientActions.createClientRequest());
 
+    const formData = new FormData();
+    Object.keys(clientData).forEach((key) => {
+      formData.append(key, clientData[key]);
+    });
+
     // Use axiosRequest helper function
     const response = await axiosRequest(
       dispatch,
       "POST",
       `${route}/`,
-      clientData
+      formData,
+      null,
+      { "Content-Type": "multipart/form-data" }
     );
 
     console.log("create-client-res-data", response.data);
@@ -123,15 +130,19 @@ export const createClient = (clientData) => async (dispatch) => {
 
 export const updateClient = (clientData, clientId) => async (dispatch) => {
   try {
-    console.log("update-client-req-data", clientData);
     dispatch(clientActions.updateClientRequest());
-
     // Use axiosRequest helper function
+    const formData = new FormData();
+    Object.keys(clientData).forEach((key) => {
+      formData.append(key, clientData[key]);
+    });
     const response = await axiosRequest(
       dispatch,
       "PUT",
       `${route}/${clientId}`,
-      clientData
+      formData,
+      null,
+      { "Content-Type": "multipart/form-data" }
     );
 
     console.log("update-client-res-data", response.data);

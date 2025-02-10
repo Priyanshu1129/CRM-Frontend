@@ -137,6 +137,12 @@ export const deleteSubIndustry = (subIndustryId, confirm = 'true', undo = 'false
 
     console.log("delete-subIndustry-res-data", response);
     dispatch(subIndustryActions.deleteSubIndustrySuccess(response));
+    dispatch(
+      subIndustryActions.updateSubIndustryList({
+        type: "delete",
+        payload: response?.data?.subIndustry,
+      })
+    );
   } catch (error) {
     console.log("delete-subIndustry-error", error);
     dispatch(

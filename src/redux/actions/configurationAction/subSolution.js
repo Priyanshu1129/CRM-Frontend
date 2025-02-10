@@ -137,6 +137,12 @@ export const deleteSubSolution = (subSolutionId,confirm = 'true', undo = 'false'
 
     console.log("delete-subSolution-res-data", response);
     dispatch(subSolutionActions.deleteSubSolutionSuccess(response));
+    dispatch(
+      subSolutionActions.updateSubSolutionList({
+        type: "delete",
+        payload: response?.data?.subSolution,
+      })
+    );
   } catch (error) {
     console.log("delete-subSolution-error", error);
     dispatch(

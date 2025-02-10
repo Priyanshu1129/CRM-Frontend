@@ -16,6 +16,11 @@ import {
 } from "@/hooks";
 
 import DeleteConfigModal from "./delete-config-model";
+import { useClassifications } from "@/hooks/adminPanel/configurations/client/classification/useClassifications";
+import { useIncorporationTypes } from "@/hooks/adminPanel/configurations/client/incorporationType/useIncorporationTypes";
+import { useArcheTypes } from "@/hooks/adminPanel/configurations/contact/archType/useArcheTypes";
+import { useRelationshipDegrees } from "@/hooks/adminPanel/configurations/contact/relationshipDegree/useRelationshipDegrees";
+import { useRelationshipStatuses } from "@/hooks/adminPanel/configurations/client/relationshipStatus/useRelationshipStatuses";
 
 const ConfigPage = ({ configType }) => {
   const [pageSize, setPageSize] = useState(100);
@@ -61,6 +66,31 @@ const ConfigPage = ({ configType }) => {
     setRefresh,
     configType,
   });
+  const {classifications, loading : classificationLoading} = useClassifications({
+    refresh,
+    setRefresh,
+    configType,
+  });
+  const {incorporationTypes, loading : incorporationTypeLoading } = useIncorporationTypes({
+    refresh,
+    setRefresh,
+    configType,
+  });
+  const {relationshipStatuses, loading : relationshipStatusesLoading } = useRelationshipStatuses({
+    refresh,
+    setRefresh,
+    configType,
+  });
+  const {archeTypes, loading : archeTypeLoading } = useArcheTypes({
+    refresh,
+    setRefresh,
+    configType,
+  });
+  const {relationshipDegrees, loading : relationshipDegreesLoading } = useRelationshipDegrees({
+    refresh,
+    setRefresh,
+    configType,
+  });
 
   // Determine data and loading state based on configType
   let data, loading;
@@ -92,6 +122,28 @@ const ConfigPage = ({ configType }) => {
     case "sales-sub-stage":
       data = salesSubStages;
       loading = salesSubStagesLoading;
+      break;
+    //client
+    case "classification":
+      data = classifications;
+      loading = classificationLoading;
+      break;
+    case "incorporation-type":
+      data = incorporationTypes;
+      loading = incorporationTypeLoading;
+      break;
+    case "relationship-status":
+      data = relationshipStatuses;
+      loading = relationshipStatusesLoading;
+      break;
+    //contact
+    case "arche-type":
+      data = archeTypes;
+      loading = archeTypeLoading;
+      break;
+    case "relationship-degree":
+      data = relationshipDegrees;
+      loading = relationshipDegreesLoading;
       break;
     default:
       data = [];

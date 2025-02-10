@@ -43,27 +43,30 @@ export const getColumns = ({
       fixed: "right",
       width: 100,
       render: (_, record) => {
+        console.log("record : ", record)
         const updateConfigData = {
           label: record.text,
           _id: record.value,
           salesStage: record.salesStage || null,
         };
-        record.updateConfigPopup = true;
+      
+        const newRecord = { ...record, updateConfigPopup: true }; // ✅ No mutation
+      
         return (
           <TableActions
             setUpdateConfigData={setUpdateConfigData}
             updateConfigData={updateConfigData}
             setShowUpdateConfigPopup={setShowUpdateConfigPopup}
-            record={record}
+            record={newRecord}
             deleteAction={configType == "sales-stage" ? false : true}
-            // showUrl={`/admin/configurations/territory/${record.value}`}
             showUrl={`/admin/configurations/update`}
             updateAction={true}
             detailsAction={false}
             deletePopupFor={configType}
           />
         );
-      },
+      }
+      ,
     },
   ];
   if (configType == "sales-sub-stage") {

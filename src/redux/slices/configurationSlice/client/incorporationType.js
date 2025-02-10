@@ -32,7 +32,7 @@ const incorporationTypeSlice = createSlice({
   name: "incorporationType",
   initialState: initialIncorporationTypeState,
   reducers: {
-    getIncorporationTypeRequest: (state, action) => {
+    getIncorporationTypeRequest: (state) => {
       state.getIncorporationType.status = "pending";
     },
     getIncorporationTypeSuccess: (state, action) => {
@@ -43,7 +43,7 @@ const incorporationTypeSlice = createSlice({
       state.getIncorporationType.status = "failed";
       state.getIncorporationType.error = action.payload;
     },
-    getAllIncorporationTypesRequest: (state, action) => {
+    getAllIncorporationTypesRequest: (state) => {
       state.getAllIncorporationTypes.status = "pending";
     },
     getAllIncorporationTypesSuccess: (state, action) => {
@@ -54,7 +54,7 @@ const incorporationTypeSlice = createSlice({
       state.getAllIncorporationTypes.status = "failed";
       state.getAllIncorporationTypes.error = action.payload;
     },
-    createIncorporationTypeRequest: (state, action) => {
+    createIncorporationTypeRequest: (state) => {
       state.createIncorporationType.status = "pending";
     },
     createIncorporationTypeSuccess: (state, action) => {
@@ -63,10 +63,9 @@ const incorporationTypeSlice = createSlice({
     },
     createIncorporationTypeFailure: (state, action) => {
       state.createIncorporationType.status = "failed";
-      state.createIncorporationType.data = null;
       state.createIncorporationType.error = action.payload;
     },
-    updateIncorporationTypeRequest: (state, action) => {
+    updateIncorporationTypeRequest: (state) => {
       state.updateIncorporationType.status = "pending";
     },
     updateIncorporationTypeSuccess: (state, action) => {
@@ -91,7 +90,7 @@ const incorporationTypeSlice = createSlice({
     clearGetIncorporationTypeStatus: (state) => {
       state.getIncorporationType.status = "idle";
     },
-    clearGetIncorporationTypeData: () => {
+    clearGetIncorporationTypeData: (state) => {
       state.getIncorporationType.data = null;
     },
     clearGetIncorporationTypeError: (state) => {
@@ -100,7 +99,7 @@ const incorporationTypeSlice = createSlice({
     clearGetAllIncorporationTypesStatus: (state) => {
       state.getAllIncorporationTypes.status = "idle";
     },
-    clearGetAllIncorporationTypesData: () => {
+    clearGetAllIncorporationTypesData: (state) => {
       state.getAllIncorporationTypes.data = null;
     },
     clearGetAllIncorporationTypesError: (state) => {
@@ -109,7 +108,7 @@ const incorporationTypeSlice = createSlice({
     clearCreateIncorporationTypeStatus: (state) => {
       state.createIncorporationType.status = "idle";
     },
-    clearCreateIncorporationTypeData: () => {
+    clearCreateIncorporationTypeData: (state) => {
       state.createIncorporationType.data = null;
     },
     clearCreateIncorporationTypeError: (state) => {
@@ -118,7 +117,7 @@ const incorporationTypeSlice = createSlice({
     clearUpdateIncorporationTypeStatus: (state) => {
       state.updateIncorporationType.status = "idle";
     },
-    clearUpdateIncorporationTypeData: () => {
+    clearUpdateIncorporationTypeData: (state) => {
       state.updateIncorporationType.data = null;
     },
     clearUpdateIncorporationTypeError: (state) => {
@@ -127,11 +126,48 @@ const incorporationTypeSlice = createSlice({
     clearDeleteIncorporationTypeStatus: (state) => {
       state.deleteIncorporationType.status = "idle";
     },
-    clearDeleteIncorporationTypeData: () => {
+    clearDeleteIncorporationTypeData: (state) => {
       state.deleteIncorporationType.data = null;
     },
     clearDeleteIncorporationTypeError: (state) => {
       state.deleteIncorporationType.error = null;
+    },
+    updateIncorporationTypeList: (state, action) => {
+      const { type, payload } = action.payload;
+
+      if (!Array.isArray(state.getAllIncorporationTypes?.data?.data)) {
+        state.getAllIncorporationTypes.data = {
+          ...state.getAllIncorporationTypes.data,
+          data: [],
+        };
+      }
+
+      switch (type) {
+        case "add": {
+          state.getAllIncorporationTypes.data.data = [
+            payload,
+            ...state.getAllIncorporationTypes.data.data,
+          ];
+          break;
+        }
+        case "update": {
+          const index = state.getAllIncorporationTypes.data.data.findIndex(
+            (incType) => incType._id.toString() === payload?._id.toString()
+          );
+          if (index !== -1) {
+            state.getAllIncorporationTypes.data.data[index] = payload;
+          }
+          break;
+        }
+        case "delete": {
+          state.getAllIncorporationTypes.data.data = state.getAllIncorporationTypes.data.data.filter(
+            (incType) => incType._id.toString() !== payload._id.toString()
+          );
+          break;
+        }
+        default:
+          console.warn(`Unhandled type: ${type}`);
+      }
     },
   },
 });
