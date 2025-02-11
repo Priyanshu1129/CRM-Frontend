@@ -1,11 +1,14 @@
 "use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllClassifications,
-  getAllIncorporationTypes,
-  getAllRelationshipStatus,
-} from "@/redux/actions/clientAction";
+// import {
+//   getAllClassifications,
+//   getAllIncorporationTypes,
+//   getAllRelationshipStatus,
+// } from "@/redux/actions/clientAction";
+import { getAllClassifications } from "@/redux/actions/configurationAction/client/classification";
+import { getAllIncorporationTypes } from "@/redux/actions/configurationAction/client/incorporationType";
+import { getAllRelationshipStatuses } from "@/redux/actions/configurationAction/client/relationshipStatus";
 import { Select, Form } from "antd";
 
 export const ClassificationsSelector = ({ label, name, rules }) => {
@@ -116,7 +119,7 @@ export const RelationshipStatusSelector = ({ label, name, rules }) => {
 
   const fetchAllRelationshipStatus = useCallback(() => {
     if (!relationshipStatus) {
-      dispatch(getAllRelationshipStatus());
+      dispatch(getAllRelationshipStatuses());
     }
   }, [dispatch, relationshipStatus]);
 
