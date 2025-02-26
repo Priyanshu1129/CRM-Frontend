@@ -54,7 +54,7 @@ const AddTender = () => {
       }}
     >
       <FormHeader
-        fileUpload={true}
+        fileUpload={false}
         setUploadModal={setUploadModal}
         backButtonText={"Return"}
       />
@@ -302,8 +302,8 @@ const AddTender = () => {
           </Row>
         </Form>
         <BulkUploadModal
-          setUploadModal={setUploadModal}
-          uploadModal={uploadModal}
+          setOpen={setUploadModal}
+          open={uploadModal}
           resource="tender"
         />
       </Space>

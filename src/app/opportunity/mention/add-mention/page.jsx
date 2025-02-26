@@ -116,7 +116,7 @@ const AddBusinessDevelopment = () => {
       }}
     >
       <FormHeader
-        fileUpload={true}
+        fileUpload={false}
         setUploadModal={setUploadModal}
         listButton={true}
         listButtonText="Show All Mentions"
@@ -294,8 +294,8 @@ const AddBusinessDevelopment = () => {
           </Row>
         </Form>
         <BulkUploadModal
-          setUploadModal={setUploadModal}
-          uploadModal={uploadModal}
+          setOpen={setUploadModal}
+          open={uploadModal}
           resource="bd"
         />
       </Space>

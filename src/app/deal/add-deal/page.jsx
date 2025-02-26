@@ -51,7 +51,7 @@ const AddDeal = () => {
       }}
     >
       <FormHeader
-        fileUpload={true}
+        fileUpload={false}
         setUploadModal={setUploadModal}
         backButtonText={"Return"}
       />
@@ -253,8 +253,8 @@ const AddDeal = () => {
           </Row>
         </Form>
         <BulkUploadModal
-          setUploadModal={setUploadModal}
-          uploadModal={uploadModal}
+          setOpen={setUploadModal}
+          open={uploadModal}
           resource="opportunity"
         />
       </Space>
