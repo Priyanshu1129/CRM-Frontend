@@ -169,8 +169,8 @@ const AddClient = () => {
                 rules={clientFormRules.clientStatus}
               >
                 <Select>
-                  <Select.Option value={true}>Listed</Select.Option>
-                  <Select.Option value={false}>Unlisted</Select.Option>
+                  <Select.Option value={'Listed'}>Listed</Select.Option>
+                  <Select.Option value={'Unlisted'}>Unlisted</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -311,9 +311,9 @@ const AddClient = () => {
         </Form>
 
         <BulkUploadModal
-          setUploadModal={setUploadModal}
-          uploadModal={uploadModal}
-          resource="client"
+          setOpen={setUploadModal}
+          open={uploadModal}
+          resource={"client"}
         />
       </Space>
     </div>
