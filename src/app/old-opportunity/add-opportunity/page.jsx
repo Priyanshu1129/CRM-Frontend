@@ -265,7 +265,7 @@ const AddOpportunity = () => {
       }}
     >
       <FormHeader
-        fileUpload={true}
+        fileUpload={false}
         setUploadModal={setUploadModal}
         backButtonText={"Return"}
       />

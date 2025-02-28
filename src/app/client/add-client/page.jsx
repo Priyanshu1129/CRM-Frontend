@@ -313,7 +313,7 @@ const AddClient = () => {
         <BulkUploadModal
           setOpen={setUploadModal}
           open={uploadModal}
-          resource={"client"}
+          resource="client"
         />
       </Space>
     </div>
