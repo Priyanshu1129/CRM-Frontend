@@ -33,6 +33,8 @@ const Login = () => {
         name="login"
         initialValues={{
           remember: true,
+          email: "ashwingorle7777@gmail.com",
+          password: "12345678",
         }}
         onFinish={onFinish}
       >
