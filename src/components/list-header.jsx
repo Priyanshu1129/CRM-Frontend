@@ -62,10 +62,12 @@ export const ListHeader = ({
           ) : (
             <>
               <ListTitleButton toPath={toPath} buttonText={buttonText} />
-              <DeletedItemButton
-                buttonText={deletedItemButtonText}
-                setShowDeletedItems={setShowDeletedItems}
-              />
+              {pageName == "user" && (
+                <DeletedItemButton
+                  buttonText={deletedItemButtonText}
+                  setShowDeletedItems={setShowDeletedItems}
+                />
+              )}
             </>
           )
         ) : null}
