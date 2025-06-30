@@ -6,13 +6,13 @@ import { ListSearch } from "./list-search";
 import { AppstoreOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import { ConfigListTitleButton } from "./config-list-title-button";
 import { BackButton } from ".";
+import { DeletedItemButton } from ".";
 import { useCheckPermission } from "@/hooks/permissions/useCheckPermission";
 
 export const ListHeader = ({
   setView,
   setRefresh,
   toPath,
-  buttonText,
   pageName,
   view,
   FilterComponent,
@@ -22,7 +22,10 @@ export const ListHeader = ({
   addButton = true,
   type = "normal",
   backButton = false,
+  buttonText,
   backButtonText = "Return",
+  deletedItemButtonText = "Deleted Items",
+  setShowDeletedItems,
   setShowCreateConfigPopup,
   configType,
 }) => {
@@ -57,7 +60,13 @@ export const ListHeader = ({
               />
             )
           ) : (
-            <ListTitleButton toPath={toPath} buttonText={buttonText} />
+            <>
+              <ListTitleButton toPath={toPath} buttonText={buttonText} />
+              <DeletedItemButton
+                buttonText={deletedItemButtonText}
+                setShowDeletedItems={setShowDeletedItems}
+              />
+            </>
           )
         ) : null}
         {pageName !== "user" && FilterComponent && (

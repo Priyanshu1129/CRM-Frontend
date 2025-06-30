@@ -3,18 +3,20 @@ import React, { useState } from "react";
 import { ListHeader } from "@/components";
 import { UsersTableView } from "./components";
 import { useFetchUsers } from "@/hooks/user";
-import DeleteUserModel from "./components/DeleteUserModal";
+import DeleteOrUndoUserModel from "./components/DeleteUserModal";
 
 const UserMaster = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
   const [refresh, setRefresh] = useState(false);
+  const [showDeletedItems, setShowDeletedItems] = useState(false);
 
   const { users, loading, totalCount } = useFetchUsers(
     currentPage,
     pageSize,
     refresh,
-    setRefresh
+    setRefresh,
+    showDeletedItems
   );
 
   return (
@@ -28,6 +30,8 @@ const UserMaster = () => {
       <ListHeader
         toPath={"/user/add-user"}
         buttonText={"Add New Member"}
+        deletedItemButtonText={"Members"}
+        setShowDeletedItems={setShowDeletedItems}
         pageName={"user"}
         setRefresh={setRefresh}
       />
@@ -44,9 +48,10 @@ const UserMaster = () => {
           setPageSize={setPageSize}
           loading={loading}
           total={totalCount}
+          undoButton={showDeletedItems}
         />
       </div>
-      <DeleteUserModel/>
+      <DeleteOrUndoUserModel undoMode={showDeletedItems} />
     </div>
   );
 };

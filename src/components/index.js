@@ -7,6 +7,8 @@ export * from "./table";
 export * from "./list-header";
 export * from "./list-search";
 export * from "./list-title-button";
+export * from "./config-list-title-button";
+export * from "./deleted-items-button";
 export * from "./pagination-total";
 export * from "./layout/title";
 export * from "./notifications";

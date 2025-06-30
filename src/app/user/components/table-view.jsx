@@ -7,8 +7,9 @@ export const UsersTableView = ({
   loading,
   data,
   total,
+  undoButton,
 }) => {
-  const columns = getColumns({ data });
+  const columns = getColumns({ data, undoButton });
   return (
     <>
       <Table

@@ -4,43 +4,58 @@ import { notification } from "antd";
 import { getAllUsers } from "@/redux/actions/userAction";
 import { userActions } from "@/redux/slices/userSlice";
 
-export const useFetchUsers = (currentPage, pageSize, refresh, setRefresh) => {
+export const useFetchUsers = (
+  currentPage,
+  pageSize,
+  refresh,
+  setRefresh,
+  showDeletedItems
+) => {
   const dispatch = useDispatch();
-  const { status, data, error } = useSelector(
-    (state) => state.user.getAllUsers
+  const { status, data, error } = useSelector((state) =>
+    showDeletedItems ? state.user.getAllDeletedUsers : state.user.getAllUsers
   );
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState(data?.users || []);
 
   const fetchAllUsers = useCallback(() => {
-    dispatch(getAllUsers({ page: currentPage, limit: pageSize }));
+    dispatch(
+      getAllUsers({
+        page: currentPage,
+        limit: pageSize,
+        deleted: showDeletedItems,
+      })
+    );
     setRefresh(false);
-  }, [dispatch, currentPage, pageSize]);
+  }, [dispatch, currentPage, pageSize, setRefresh, showDeletedItems]);
 
   useEffect(() => {
     if (
-      !users ||
+      !data?.users ||
       currentPage !== Number(data?.page) ||
       pageSize !== Number(data?.limit) ||
       refresh
     ) {
       fetchAllUsers();
+    } else {
+      setUsers(data?.users);
     }
   }, [
     fetchAllUsers,
-    users,
     currentPage,
     pageSize,
     data?.page,
     data?.limit,
     refresh,
+    data?.users,
+    showDeletedItems,
   ]);
 
   useEffect(() => {
     if (status === "pending") {
       setLoading(true);
     } else if (status === "success") {
-      setUsers(data?.users);
+      setUsers(data?.users || []);
       setLoading(false);
       dispatch(userActions.clearGetAllUsersStatus());
     } else if (status === "failed") {
@@ -52,7 +67,11 @@ export const useFetchUsers = (currentPage, pageSize, refresh, setRefresh) => {
       dispatch(userActions.clearGetAllUsersStatus());
       dispatch(userActions.clearGetAllUsersError());
     }
-  }, [dispatch, status, data?.users, error, setRefresh]);
+  }, [dispatch, status, data?.users, error]);
 
-  return { users, loading, totalCount: data?.totalCount };
+  return {
+    users,
+    loading,
+    totalCount: data?.totalCount,
+  };
 };

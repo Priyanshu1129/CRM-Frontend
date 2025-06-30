@@ -5,7 +5,7 @@ import { mastersConfigActions } from "@/redux/slices/configurationSlice";
 const route = `${serverURL}/user`;
 
 export const getAllUsers =
-  ({ page = null, limit = null, config = false }) =>
+  ({ page = null, limit = null, config = false, deleted = false }) =>
   async (dispatch) => {
     try {
       // Dispatch the appropriate request action based on config flag
@@ -23,7 +23,7 @@ export const getAllUsers =
         "GET", // HTTP method for GET request
         `${route}/`, // Endpoint for getting users
         null, // No data for GET request
-        { limit, page, config } // Query parameters for pagination and config
+        { limit, page, config, deleted } // Query parameters for pagination and config
       );
 
       console.log("get-all-user-res-data", response);
@@ -31,6 +31,8 @@ export const getAllUsers =
       // Dispatch success actions based on config flag
       if (config) {
         dispatch(mastersConfigActions.getConfigUsersSuccess(response?.data));
+      } else if (deleted) {
+        dispatch(userActions.getAllDeletedUsersSuccess(response?.data));
       } else {
         dispatch(userActions.getAllUsersSuccess(response?.data));
       }
@@ -38,6 +40,12 @@ export const getAllUsers =
       // If error occurs, handle failure with the specific error message
       if (config) {
         dispatch(mastersConfigActions.getConfigUsersFailure());
+      } else if (deleted) {
+        dispatch(
+          userActions.getAllDeletedUsersFailure(
+            error.message || "An error occurred"
+          )
+        );
       } else {
         dispatch(
           userActions.getAllUsersFailure(error.message || "An error occurred")
@@ -75,8 +83,8 @@ export const createUser = (userData) => async (dispatch) => {
     Object.keys(userData).forEach((key) => {
       formData.append(key, userData[key]);
     });
-    console.log("user data : ", userData)
-    console.log("form data : ", formData)
+    console.log("user data : ", userData);
+    console.log("form data : ", formData);
     const response = await axiosRequest(
       dispatch,
       "POST", // HTTP method for POST request

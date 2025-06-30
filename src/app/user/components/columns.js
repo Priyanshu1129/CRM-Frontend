@@ -18,7 +18,7 @@ const calculateDynamicWidth = (title, dataIndex, data) => {
   return maxLength * widthFactor;
 };
 
-export const getColumns = ({ data }) => {
+export const getColumns = ({ data, undoButton }) => {
   const columns = [
     {
       title: <div style={{ paddingLeft: "24px" }}>Name</div>,
@@ -137,7 +137,12 @@ export const getColumns = ({ data }) => {
         const roleId = record?.role?._id;
         const userId = record?._id;
         return (
-          <TableActions deletePopupFor="user" record={record} showUrl={`/user/user-details/${roleId}/${userId}`} />
+          <TableActions
+            deletePopupFor="user"
+            record={record}
+            showUrl={`/user/user-details/${roleId}/${userId}`}
+            undoButton={undoButton}
+          />
         );
       },
     },

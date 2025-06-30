@@ -11,6 +11,11 @@ const initialUserState = {
     error: null,
     data: null,
   },
+  getAllDeletedUsers: {
+    status: "idle",
+    error: null,
+    data: null,
+  },
   createUser: {
     status: "idle",
     error: null,
@@ -26,20 +31,20 @@ const initialUserState = {
     error: null,
     data: null,
   },
-  deleteUserPopup : {
-    open : false,
-    user : null
-  }
+  deleteOrUndoUserPopup: {
+    open: false,
+    user: null,
+  },
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState: initialUserState,
   reducers: {
-    setDeleteUserPopup : (state, action) => {
-         const {open, user} = action.payload;
-         state.deleteUserPopup.open = open;
-         state.deleteUserPopup.user = user;
+    setDeleteOrUndoUserPopup: (state, action) => {
+      const { open, user } = action.payload;
+      state.deleteOrUndoUserPopup.open = open;
+      state.deleteOrUndoUserPopup.user = user;
     },
 
     getUserRequest: (state, action) => {
@@ -63,6 +68,17 @@ const userSlice = createSlice({
     getAllUsersFailure: (state, action) => {
       state.getAllUsers.status = "failed";
       state.getAllUsers.error = action.payload;
+    },
+    getAllDeletedUsersRequest: (state) => {
+      state.getAllDeletedUsers.status = "pending";
+    },
+    getAllDeletedUsersSuccess: (state, action) => {
+      state.getAllDeletedUsers.status = "success";
+      state.getAllDeletedUsers.data = action.payload;
+    },
+    getAllDeletedUsersFailure: (state, action) => {
+      state.getAllDeletedUsers.status = "failed";
+      state.getAllDeletedUsers.error = action.payload;
     },
     createUserRequest: (state) => {
       state.createUser.status = "pending";
@@ -116,9 +132,17 @@ const userSlice = createSlice({
     clearGetAllUsersStatus: (state) => {
       state.getAllUsers.status = "idle";
     },
-
     clearGetAllUsersData: (state) => {
       state.getAllUsers.data = null;
+    },
+    clearGetAllDeletedUsersError: (state) => {
+      state.getAllDeletedUsers.error = null;
+    },
+    clearGetAllDeletedUsersStatus: (state) => {
+      state.getAllDeletedUsers.status = "idle";
+    },
+    clearGetAllDeletedUsersData: (state) => {
+      state.getAllDeletedUsers.data = null;
     },
     clearGetAllUsersError: (state) => {
       state.getAllUsers.error = null;
@@ -152,7 +176,7 @@ const userSlice = createSlice({
     },
     updateUserList: (state, action) => {
       const { type, payload } = action.payload;
-      console.log('update list ', type , payload)
+      console.log("update list ", type, payload);
       // Ensure `state.getAllUsers.data.users` exists and is an array
       if (!Array.isArray(state.getAllUsers?.data?.users)) {
         state.getAllUsers.data = {
@@ -183,19 +207,24 @@ const userSlice = createSlice({
         }
 
         case "delete": {
-          console.log("filter",state.getAllUsers.data.users.filter(
-            (user) => user._id.toString() !== payload._id.toString()
-          ))
-          state.getAllUsers.data.users = [...state.getAllUsers.data.users.filter(
-            (user) => user._id.toString() !== payload._id.toString()
-          )]
+          console.log(
+            "filter",
+            state.getAllUsers.data.users.filter(
+              (user) => user._id.toString() !== payload._id.toString()
+            )
+          );
+          state.getAllUsers.data.users = [
+            ...state.getAllUsers.data.users.filter(
+              (user) => user._id.toString() !== payload._id.toString()
+            ),
+          ];
           break;
         }
 
         default:
           console.warn(`Unhandled type: ${type}`);
       }
-    }, 
+    },
   },
 });
 
