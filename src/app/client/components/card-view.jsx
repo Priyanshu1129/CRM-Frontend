@@ -3,7 +3,6 @@ import { List } from "antd";
 import { PaginationTotal } from "@/components";
 
 import { ClientCard, ClientCardSkeleton } from "./card";
-import { FullScreenLoading } from "@/components";
 
 export const ClientsCardView = ({
   data,

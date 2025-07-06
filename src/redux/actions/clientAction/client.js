@@ -166,7 +166,7 @@ export const updateClient = (clientData, clientId) => async (dispatch) => {
 };
 
 export const deleteClient =
-  (clientId, confirm = "false") =>
+  (clientId, confirm = "false", undo = "false") =>
   async (dispatch) => {
     try {
       console.log("delete-ClientData", clientId);
@@ -181,6 +181,14 @@ export const deleteClient =
 
       console.log("delete-Client-res-data", response.data);
       dispatch(clientActions.deleteClientSuccess(response.data));
+      if (confirm == "true") {
+        dispatch(
+          clientActions.updateClientList({
+            type: undo == "true" ? "undo" : "delete",
+            payload: response.data.client,
+          })
+        );
+      }
     } catch (error) {
       dispatch(
         clientActions.deleteClientFailure(error.message || "An error occurred")

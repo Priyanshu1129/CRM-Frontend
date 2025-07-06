@@ -170,6 +170,8 @@ const clientSlice = createSlice({
             state.getAllClients.data.clients.filter(
               (client) => client._id.toString() !== payload._id.toString()
             );
+
+          state.getAllClients.data.totalCount--;
           break;
         }
 

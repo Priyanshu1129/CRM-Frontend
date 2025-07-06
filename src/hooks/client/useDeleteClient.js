@@ -19,27 +19,29 @@ export const useDeleteClient = () => {
       setLoading(true);
     } else if (status === "success") {
       setLoading(false);
-      notification.success({
-        message: "Success",
-        description: `${data?.confirm ? "client and related entities deleted successfully" : "Items to be deleted fetched successfully"}`,
-      });
       dispatch(clientActions.clearDeleteClientError());
       dispatch(clientActions.clearDeleteClientStatus());
-      if(data?.confirm == true) router.push('/client'); 
+      if (data?.confirm == true) router.push("/client");
     } else if (status === "failed") {
       setLoading(false);
       notification.error({
         message: "Error",
-        description: error || `Failed to ${data?.confirm? "delete client and related entries" : "fetch Delete client and related data"}`,
+        description:
+          error ||
+          `Failed to ${
+            data?.confirm
+              ? "delete client and related entries"
+              : "fetch Delete client and related data"
+          }`,
       });
       dispatch(clientActions.clearDeleteClientStatus());
       dispatch(clientActions.clearDeleteClientError());
     }
   }, [status, error, dispatch]);
 
-  const handleDeleteClient = (clientId, confirm = 'false') => {
-      dispatch(deleteClient(clientId, confirm));
+  const handleDeleteClient = (clientId, confirm = "false") => {
+    dispatch(deleteClient(clientId, confirm));
   };
 
-  return {loading, data, handleDeleteClient};
+  return { loading, data, handleDeleteClient };
 };

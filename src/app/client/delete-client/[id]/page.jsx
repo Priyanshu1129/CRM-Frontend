@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Button, Row, Col, Spin, Alert, Card, Typography, Divider } from "antd";
-import { useParams, useRouter } from "next/navigation";
+import { Button, Alert, Divider } from "antd";
+import { useParams } from "next/navigation";
 import { useDeleteClient } from "@/hooks/client/useDeleteClient";
 
 // Import Card Components
@@ -13,11 +13,9 @@ import RegistrationCard from "./component/RegistrationCard";
 import { ReloadOutlined } from "@ant-design/icons";
 import { BackButton } from "@/components";
 
-const { Title, Text } = Typography;
-
 const DeleteClientPage = () => {
   const { id } = useParams();
-  const router = useRouter();
+
   const { loading, data, handleDeleteClient } = useDeleteClient();
 
   // Call handleDeleteClient when the component is mounted or the id changes
@@ -57,7 +55,9 @@ const DeleteClientPage = () => {
       >
         {/* Client Details Section */}
         <section style={{ marginBottom: "12px" }}>
-          <div style={{ fontSize: "20px", fontWeight: 600 }}>Client Details</div>
+          <div style={{ fontSize: "20px", fontWeight: 600 }}>
+            Client Details
+          </div>
           <Alert
             style={{ padding: "6px" }}
             description="Below are the details of the client. Please verify all information before proceeding with the deletion."
@@ -68,7 +68,11 @@ const DeleteClientPage = () => {
             {data?.client ? (
               <ClientCard client={data?.client} />
             ) : (
-              <Alert message="No Client Information Available" type="info" showIcon />
+              <Alert
+                message="No Client Information Available"
+                type="info"
+                showIcon
+              />
             )}
           </div>
         </section>
@@ -77,7 +81,9 @@ const DeleteClientPage = () => {
 
         {/* Opportunities and Associated Tenders Section */}
         <section style={{ marginBottom: "12px" }}>
-          <div style={{ fontSize: "20px", fontWeight: 600 }}>Opportunities and Associated Tenders</div>
+          <div style={{ fontSize: "20px", fontWeight: 600 }}>
+            Opportunities and Associated Tenders
+          </div>
           <Alert
             style={{ padding: "6px" }}
             description="Deleting this client will also delete all associated opportunities and tenders."
@@ -87,10 +93,17 @@ const DeleteClientPage = () => {
           <div style={{ marginTop: "6px" }}>
             {data?.opportunities?.length > 0 ? (
               data?.opportunities?.map((opportunity) => (
-                <OpportunityCard key={opportunity?._id} opportunity={opportunity} />
+                <OpportunityCard
+                  key={opportunity?._id}
+                  opportunity={opportunity}
+                />
               ))
             ) : (
-              <Alert message="No Opportunities Available" type="info" showIcon />
+              <Alert
+                message="No Opportunities Available"
+                type="info"
+                showIcon
+              />
             )}
           </div>
         </section>
@@ -99,7 +112,9 @@ const DeleteClientPage = () => {
 
         {/* Business Developments Section */}
         <section style={{ marginBottom: "12px" }}>
-          <div style={{ fontSize: "20px", fontWeight: 600 }}>Business Developments</div>
+          <div style={{ fontSize: "20px", fontWeight: 600 }}>
+            Business Developments
+          </div>
           <Alert
             style={{ padding: "6px" }}
             description="Deleting the client will also delete all related business developments."
@@ -112,7 +127,11 @@ const DeleteClientPage = () => {
                 <BusinessDevelopmentCard key={bd?._id} bd={bd} />
               ))
             ) : (
-              <Alert message="No Business Developments Available" type="info" showIcon />
+              <Alert
+                message="No Business Developments Available"
+                type="info"
+                showIcon
+              />
             )}
           </div>
         </section>
@@ -131,10 +150,17 @@ const DeleteClientPage = () => {
           <div style={{ marginTop: "6px" }}>
             {data?.registrations?.length > 0 ? (
               data?.registrations?.map((registration) => (
-                <RegistrationCard key={registration?._id} registration={registration} />
+                <RegistrationCard
+                  key={registration?._id}
+                  registration={registration}
+                />
               ))
             ) : (
-              <Alert message="No Registrations Available" type="info" showIcon />
+              <Alert
+                message="No Registrations Available"
+                type="info"
+                showIcon
+              />
             )}
           </div>
         </section>
