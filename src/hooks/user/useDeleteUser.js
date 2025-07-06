@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { notification } from "antd";
 import { userActions } from "@/redux/slices/userSlice";
 import { deleteUser } from "@/redux/actions/userAction";
-import { useRouter } from "next/navigation";
 
 export const useDeleteUser = (undoMode) => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const router = useRouter();
 
   const { status, data, error } = useSelector((state) => state.user.deleteUser);
 

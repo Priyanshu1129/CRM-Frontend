@@ -207,14 +207,33 @@ const userSlice = createSlice({
         }
 
         case "delete": {
-          console.log(
-            "filter",
-            state.getAllUsers.data.users.filter(
-              (user) => user._id.toString() !== payload._id.toString()
-            )
-          );
+          // remove user from active users list
           state.getAllUsers.data.users = [
             ...state.getAllUsers.data.users.filter(
+              (user) => user._id.toString() !== payload._id.toString()
+            ),
+          ];
+          state.getAllUsers.data.totalCount--;
+          // add user in deleted users list
+          if (Array.isArray(state.getAllDeletedUsers?.data?.users)) {
+            state.getAllDeletedUsers.data.users = [
+              payload,
+              ...state.getAllDeletedUsers.data.users,
+            ];
+            state.getAllDeletedUsers.data.totalCount++;
+          }
+          break;
+        }
+        case "undo": {
+          // add user in active users list
+          state.getAllUsers.data.users = [
+            payload,
+            ...state.getAllUsers.data.users,
+          ];
+          state.getAllUsers.data.totalCount++;
+          // remove user from deleted users list
+          state.getAllDeletedUsers.data.users = [
+            ...state.getAllDeletedUsers.data.users.filter(
               (user) => user._id.toString() !== payload._id.toString()
             ),
           ];

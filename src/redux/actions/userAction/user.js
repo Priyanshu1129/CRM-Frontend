@@ -119,7 +119,10 @@ export const updateUser = (userData, userId) => async (dispatch) => {
     Object.keys(userData).forEach((key) => {
       formData.append(key, userData[key]);
     });
-
+    console.log("form-data contents:");
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
     const response = await axiosRequest(
       dispatch,
       "PUT",
@@ -164,7 +167,7 @@ export const deleteUser =
       dispatch(userActions.deleteUserSuccess(response.data));
       dispatch(
         userActions.updateUserList({
-          type: "delete",
+          type: undo == "true" ? "undo" : "delete",
           payload: response.data.user,
         })
       );
